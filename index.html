@@ -39,10 +39,7 @@ html, body{
 
 <img id="dashboard" src="Slide1.PNG" alt="Dashboard">
 
-<audio id="audio" controls autoplay>
-    <source src="https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8" type="application/x-mpegURL">
-    Browserul tău nu suportă redarea audio.
-</audio>
+<audio id="audio" controls autoplay></audio>
 
 <script>
 
@@ -55,34 +52,50 @@ function refreshImage() {
 setInterval(refreshImage, 30000);
 
 // Pornire radio
+// ============================
+// RADIO
+// ============================
+
+const streams = [
+    "https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8",
+    "https://ivm.antenaplay.ro/liveaudio/radiozu/playlist.m3u8",
+    "https://stream.europafm.ro/europafm.aac",
+    "https://live.rockfm.ro/rockfm.aac"
+];
+
+let currentStream = 0;
+
 const audio = document.getElementById("audio");
 
-window.addEventListener("load", () => {
+function playCurrentStream() {
+
+    console.log("Pornesc:", streams[currentStream]);
+
+    audio.src = streams[currentStream];
+    audio.load();
+
     audio.play().catch(() => {});
+
+}
+
+playCurrentStream();
+
+audio.addEventListener("error", function () {
+
+    currentStream++;
+
+    if (currentStream >= streams.length)
+        currentStream = 0;
+
+    console.log("Schimb pe sursa", currentStream + 1);
+
+    playCurrentStream();
+
 });
 
-// Dacă utilizatorul face click, încearcă din nou
-document.addEventListener("click", () => {
+document.addEventListener("click", function () {
     audio.play().catch(() => {});
 }, { once: true });
-
-// Dacă se oprește, încearcă să repornească
-audio.addEventListener("error", () => {
-    console.log("Eroare radio. Reîncerc...");
-    audio.load();
-    audio.play().catch(() => {});
-});
-
-audio.addEventListener("stalled", () => {
-    console.log("Buffering...");
-});
-
-audio.addEventListener("ended", () => {
-    console.log("Radio oprit. Repornesc...");
-    audio.load();
-    audio.play().catch(() => {});
-});
-
 </script>
 
 </body>
