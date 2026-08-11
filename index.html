@@ -7,6 +7,7 @@
 <title>Dashboard KPI</title>
 
 <style>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 html, body{
     margin:0;
     padding:0;
@@ -26,7 +27,10 @@ html, body{
 }
 
 #audio{
-    display:none;
+    position:absolute;
+    bottom:10px;
+    left:10px;
+    z-index:100;
 }
 </style>
 
@@ -36,24 +40,59 @@ html, body{
 
 <img id="dashboard" src="Slide1.PNG" alt="Dashboard">
 
-<audio id="audio" controls autoplay>
-    <source src="https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8" type="application/x-mpegURL">
-</audio>
+<audio id="audio" controls autoplay></audio>
 
 <script>
 
-function refreshImage(){
+// ============================
+// Refresh imagine
+// ============================
+
+function refreshImage() {
     document.getElementById("dashboard").src =
         "Slide1.PNG?t=" + new Date().getTime();
 }
 
-// Verifică imaginea la fiecare 30 secunde
-setInterval(refreshImage,30000);
+setInterval(refreshImage, 30000);
 
-// Încearcă să pornească radioul
-document.addEventListener("click",function(){
-    document.getElementById("audio").play();
-},{once:true});
+// ============================
+// Radio ZU
+// ============================
+
+const audio = document.getElementById("audio");
+
+if (Hls.isSupported()) {
+
+    const hls = new Hls({
+        liveSyncDurationCount: 3
+    });
+
+    hls.loadSource("https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8");
+    hls.attachMedia(audio);
+
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        audio.play().catch(() => {});
+    });
+
+    audio.addEventListener("error", function () {
+        hls.startLoad();
+    });
+
+    audio.addEventListener("stalled", function () {
+        hls.startLoad();
+    });
+
+} else if (audio.canPlayType("application/vnd.apple.mpegurl")) {
+
+    audio.src = "https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8";
+
+    audio.play().catch(() => {});
+}
+
+// Dacă utilizatorul dă click, încearcă iar
+document.addEventListener("click", function () {
+    audio.play().catch(() => {});
+}, { once: true });
 
 </script>
 
