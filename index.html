@@ -76,57 +76,7 @@ html,body{
     display:none;
 
 }
-.led{
-    position:absolute;
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    animation:pulse 1.8s infinite;
-}
-
-.green{
-    background:#00d83a;
-    box-shadow:0 0 10px #00ff55;
-}
-
-/* Poziția pe ecran */
-#ledLT{
-    left:690px;
-    top:165px;
-}
-
-@keyframes pulse{
-
-    0%{
-        transform:scale(1);
-        box-shadow:0 0 5px #00ff55;
-    }
-
-    50%{
-        transform:scale(1.25);
-        box-shadow:0 0 25px #00ff55;
-    }
-
-    100%{
-        transform:scale(1);
-        box-shadow:0 0 5px #00ff55;
-    }
-
-}
-.orange{
-    background:#ff9800;
-    box-shadow:0 0 10px orange;
-}
-
-#ledOTD{
-    left:240px;
-    top:165px;
-}
-
-#ledOTE{
-    left:1130px;
-    top:165px;
-}    
+   
 </style>
 
 </head>
@@ -134,9 +84,7 @@ html,body{
 <body>
 
 <img id="dashboard" src="Slide1.PNG">
-<div id="ledLT" class="led green"></div>
-<div id="ledOTD" class="led orange"></div>
-<div id="ledOTE" class="led orange"></div>
+
 <div id="radioBar">
 
 <button onclick="playRadio('https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8')">
