@@ -1,9 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
 <head>
-    <title>Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard KPI</title>
+
+<style>
+html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:#000;
+    overflow:hidden;
+}
+
+#dashboard{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+#audio{
+    display:none;
+}
+</style>
+
 </head>
+
 <body>
-    <h1>Salut GitHub Pages!</h1>
+
+<img id="dashboard" src="dashboard.png" alt="Dashboard">
+
+<audio id="audio" controls autoplay>
+    <source src="https://radiozu.ro/zu.m3u" type="audio/mpeg">
+</audio>
+
+<script>
+
+function refreshImage(){
+    document.getElementById("dashboard").src =
+        "dashboard.png?t=" + new Date().getTime();
+}
+
+// Verifică imaginea la fiecare 30 secunde
+setInterval(refreshImage,30000);
+
+// Încearcă să pornească radioul
+document.addEventListener("click",function(){
+    document.getElementById("audio").play();
+},{once:true});
+
+</script>
+
 </body>
 </html>
