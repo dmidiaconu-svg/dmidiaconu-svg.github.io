@@ -104,7 +104,9 @@ PESCOBAR
 </div>
 
 <audio id="audio" controls></audio>
-
+* {
+    cursor: none !important;
+}
 <script>
 
 function refreshImage(){
@@ -136,7 +138,29 @@ function playRadio(url){
 
 // pornește automat Radio ZU la încărcarea paginii
 playRadio("https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8");
+// ============================
+// Ascunde cursorul după 3 secunde
+// ============================
 
+let cursorTimer;
+
+function hideCursor() {
+    document.body.style.cursor = "none";
+}
+
+function showCursor() {
+    document.body.style.cursor = "default";
+
+    clearTimeout(cursorTimer);
+
+    cursorTimer = setTimeout(hideCursor, 3000);
+}
+
+// La încărcarea paginii
+showCursor();
+
+// La orice mișcare a mouse-ului
+document.addEventListener("mousemove", showCursor);
 </script>
 
 </body>
