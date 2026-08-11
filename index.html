@@ -7,13 +7,14 @@
 <title>Dashboard KPI</title>
 
 <style>
-html, body{
+
+html,body{
     margin:0;
     padding:0;
     width:100%;
     height:100%;
-    background:#000;
     overflow:hidden;
+    background:black;
 }
 
 #dashboard{
@@ -25,77 +26,119 @@ html, body{
     object-fit:contain;
 }
 
-#audio{
+#radioBar{
     position:absolute;
-    left:10px;
-    bottom:10px;
-    z-index:100;
+    left:15px;
+    bottom:15px;
+    z-index:999;
+
+    background:rgba(0,0,0,.25);
+    backdrop-filter:blur(10px);
+
+    border-radius:30px;
+
+    padding:8px 10px;
+
+    opacity:.25;
+
+    transition:.3s;
 }
+
+#radioBar:hover{
+    opacity:1;
+}
+
+#radioBar button{
+
+    background:transparent;
+
+    border:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+}
+
+#radioBar button:hover{
+
+    background:rgba(255,255,255,.25);
+
+}
+
+#audio{
+
+    display:none;
+
+}
+
 </style>
 
 </head>
 
 <body>
 
-<img id="dashboard" src="Slide1.PNG" alt="Dashboard">
+<img id="dashboard" src="Slide1.PNG">
 
-<audio id="audio" controls autoplay></audio>
+<div id="radioBar">
+
+<button onclick="playRadio('https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8')">
+ZU
+</button>
+
+<button onclick="playRadio('https://stream.europafm.ro/europafm.aac')">
+EUROPA
+</button>
+
+<button onclick="playRadio('https://live.rockfm.ro/rockfm.aac')">
+ROCK
+</button>
+
+<button onclick="playRadio('https://stream.dancefm.ro/dancefm.aac')">
+DANCE
+</button>
+
+</div>
+
+<audio id="audio" controls></audio>
 
 <script>
 
-// Actualizare imagine la fiecare 30 secunde
-function refreshImage() {
+function refreshImage(){
+
     document.getElementById("dashboard").src =
         "Slide1.PNG?t=" + new Date().getTime();
+
 }
 
-setInterval(refreshImage, 30000);
+setInterval(refreshImage,30000);
 
-// Pornire radio
-// ============================
-// RADIO
-// ============================
+const audio=document.getElementById("audio");
 
-const streams = [
-    "https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8",
-    "https://ivm.antenaplay.ro/liveaudio/radiozu/playlist.m3u8",
-    "https://stream.europafm.ro/europafm.aac",
-    "https://live.rockfm.ro/rockfm.aac"
-];
+function playRadio(url){
 
-let currentStream = 0;
+    audio.pause();
 
-const audio = document.getElementById("audio");
+    audio.src=url;
 
-function playCurrentStream() {
-
-    console.log("Pornesc:", streams[currentStream]);
-
-    audio.src = streams[currentStream];
     audio.load();
 
-    audio.play().catch(() => {});
+    audio.play().catch(function(e){
+
+        console.log(e);
+
+    });
 
 }
 
-playCurrentStream();
+// pornește automat Radio ZU la încărcarea paginii
+playRadio("https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8");
 
-audio.addEventListener("error", function () {
-
-    currentStream++;
-
-    if (currentStream >= streams.length)
-        currentStream = 0;
-
-    console.log("Schimb pe sursa", currentStream + 1);
-
-    playCurrentStream();
-
-});
-
-document.addEventListener("click", function () {
-    audio.play().catch(() => {});
-}, { once: true });
 </script>
 
 </body>
