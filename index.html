@@ -1,243 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ro">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard KPI</title>
 
-    <title>Sample Shop Control Center</title>
+<style>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:black;
+}
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+#dashboard{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+#radioBar{
+    position:absolute;
+    left:15px;
+    bottom:15px;
+    z-index:999;
 
-    <!-- Charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(10px);
+
+    border-radius:30px;
+
+    padding:8px 10px;
+
+    opacity:.70;
+
+    transition:.3s;
+}
+    
+#radioBar:hover{
+    opacity:1;
+}
+
+#radioBar button{
+
+    background:transparent;
+
+    border:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+}
+
+#radioBar button:hover{
+
+    background:rgba(255,255,255,.25);
+
+}
+
+#audio{
+
+    display:none;
+    
+}
+   
+</style>
 
 </head>
 
 <body>
 
-<div id="dashboard">
-
-    <!-- ===================================================== -->
-    <!-- HEADER -->
-    <!-- ===================================================== -->
-
-    <header>
-
-        <div class="logo">
-
-            <div class="company">
-
-                STABILUS
-
-            </div>
-
-            <div class="department">
-
-                ROSO GS-SP • SAMPLE SHOP
-
-            </div>
-
-        </div>
-
-        <div class="title">
-
-            Sample Shop Dashboard
-
-        </div>
-
-        <div class="status">
-
-            <div class="live">
-
-                <span class="live-dot"></span>
-
-                LIVE
-
-            </div>
-
-            <div id="clock">
-
-                --:--:--
-
-            </div>
-
-            <div id="lastRefresh">
-
-                Waiting for data...
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <!-- ===================================================== -->
-    <!-- KPI -->
-    <!-- ===================================================== -->
-
-    <section id="kpis">
-
-        <div class="kpi-card" id="otdCard">
-
-            <div class="kpi-name">
-
-                OTD
-
-            </div>
-
-            <div class="kpi-value" id="otdValue">
-
-                -- %
-
-            </div>
-
-            <div class="kpi-target">
-
-                Target 85%
-
-            </div>
-
-        </div>
-
-
-        <div class="kpi-card" id="ltCard">
-
-            <div class="kpi-name">
-
-                LT
-
-            </div>
-
-            <div class="kpi-value" id="ltValue">
-
-                -- Days
-
-            </div>
-
-            <div class="kpi-target">
-
-                Target 14 Days
-
-            </div>
-
-        </div>
-
-
-        <div class="kpi-card" id="oteCard">
-
-            <div class="kpi-name">
-
-                OTE
-
-            </div>
-
-            <div class="kpi-value" id="oteValue">
-
-                -- %
-
-            </div>
-
-            <div class="kpi-target">
-
-                Target 90%
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ===================================================== -->
-    <!-- CHARTS -->
-    <!-- ===================================================== -->
-
-    <section id="charts">
-
-        <div class="chart-box big">
-
-            <div class="chart-title">
-
-                OTD Monthly Performance
-
-            </div>
-
-            <canvas id="chartOTD"></canvas>
-
-        </div>
-
-        <div class="chart-box">
-
-            <div class="chart-title">
-
-                LT Monthly Performance
-
-            </div>
-
-            <canvas id="chartLT"></canvas>
-
-        </div>
-
-        <div class="chart-box">
-
-            <div class="chart-title">
-
-                OTE Monthly Performance
-
-            </div>
-
-            <canvas id="chartOTE"></canvas>
-
-        </div>
-
-    </section>
-
-
-    <!-- ===================================================== -->
-    <!-- FOOTER -->
-    <!-- ===================================================== -->
-
-    <footer>
-
-        <div>
-
-            STABILUS Romania
-
-        </div>
-
-        <div>
-
-            FY26
-
-        </div>
-
-        <div>
-
-            Dashboard Version 2.0
-
-        </div>
-
-    </footer>
-
+<img id="dashboard" src="Slide1.PNG">
+
+<div id="radioBar">
+
+<button onclick="playRadio('https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8')">
+ZU
+</button>
+
+<button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp')">
+KISS
+</button>
+
+<button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp')">
+MAGIC
+</button>
+<button onclick="playRadio('https://listen.radioking.com/radio/701141/stream/766385')">
+PESCOBAR
+</button>
 </div>
 
+<audio id="audio" controls></audio>
+* {
+    cursor: none !important;
+}
+<script>
 
-<script src="js/config.js"></script>
+function refreshImage(){
 
-<script src="js/dashboard.js"></script>
+    document.getElementById("dashboard").src =
+        "Slide1.PNG?t=" + new Date().getTime();
 
-<script src="js/charts.js"></script>
+}
+
+setInterval(refreshImage,30000);
+
+const audio=document.getElementById("audio");
+
+function playRadio(url){
+
+    audio.pause();
+
+    audio.src=url;
+
+    audio.load();
+
+    audio.play().catch(function(e){
+
+        console.log(e);
+
+    });
+
+}
+
+// pornește automat Radio ZU la încărcarea paginii
+playRadio("https://live7digi.antenaplay.ro/radiozu/radiozu-48000.m3u8");
+// ============================
+// Ascunde cursorul după 3 secunde
+// ============================
+
+let cursorTimer;
+
+function hideCursor() {
+    document.body.style.cursor = "none";
+}
+
+function showCursor() {
+    document.body.style.cursor = "default";
+
+    clearTimeout(cursorTimer);
+
+    cursorTimer = setTimeout(hideCursor, 3000);
+}
+
+// La încărcarea paginii
+showCursor();
+
+// La orice mișcare a mouse-ului
+document.addEventListener("mousemove", showCursor);
+</script>
 
 </body>
-
 </html>
