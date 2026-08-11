@@ -34,17 +34,17 @@ html, body{
 
 <body>
 
-<img id="dashboard" src="Slide1.png" alt="Dashboard">
+<img id="dashboard" src="Slide1.PNG" alt="Dashboard">
 
 <audio id="audio" controls autoplay>
-    <source src="https://radiozu.ro/zu.m3u" type="audio/mpeg">
+    <source src="https://radiozu.ro/zu.m3u">
 </audio>
 
 <script>
 
 function refreshImage(){
-    document.getElementById("Slide1").src =
-        "Slide1.png?t=" + new Date().getTime();
+    document.getElementById("dashboard").src =
+        "Slide1.PNG?t=" + new Date().getTime();
 }
 
 // Verifică imaginea la fiecare 30 secunde
