@@ -16,9 +16,7 @@ html,body{
     overflow:hidden;
     background:black;
 }
-* {
-    cursor: none !important;
-}
+
 #radioBar button.active {
     background: rgba(255,255,255,.35);
     color: #00ff66;
@@ -87,9 +85,7 @@ html,body{
     display:none;
     
 }
-*{
-    cursor:none !important;
-}
+
 
 #radioBar button.active{
     background:rgba(255,255,255,.35);
@@ -186,12 +182,14 @@ function hideCursor() {
 }
 
 function showCursor() {
-    document.body.style.cursor = "default";
-
+    document.body.style.cursor = "auto";
     clearTimeout(cursorTimer);
-
     cursorTimer = setTimeout(hideCursor, 3000);
 }
+
+showCursor();
+
+document.addEventListener("mousemove", showCursor);
 
 // La încărcarea paginii
 showCursor();
