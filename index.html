@@ -16,7 +16,18 @@ html,body{
     overflow:hidden;
     background:black;
 }
+* {
+    cursor: none !important;
+}
+#radioBar button.active {
+    background: rgba(255,255,255,.35);
+    color: #00ff66;
+    box-shadow: 0 0 10px rgba(0,255,100,.5);
+}
 
+#radioBar button.active:hover {
+    background: rgba(255,255,255,.45);
+}
 #dashboard{
     position:absolute;
     top:0;
@@ -76,7 +87,19 @@ html,body{
     display:none;
     
 }
-   
+*{
+    cursor:none !important;
+}
+
+#radioBar button.active{
+    background:rgba(255,255,255,.35);
+    color:#00ff66;
+    box-shadow:0 0 10px rgba(0,255,100,.5);
+}
+
+#radioBar button.active:hover{
+    background:rgba(255,255,255,.45);
+}
 </style>
 
 </head>
@@ -107,9 +130,7 @@ html,body{
 
 
 <audio id="audio" controls></audio>
-* {
-    cursor: none !important;
-}
+
 <script>
 
 function refreshImage(){
@@ -145,15 +166,7 @@ function playRadio(url, button) {
         button.classList.add("active");
     }
 }
-#radioBar button.active {
-    background: rgba(255,255,255,.35);
-    color: #00ff66;
-    box-shadow: 0 0 10px rgba(0,255,100,.5);
-}
 
-#radioBar button.active:hover {
-    background: rgba(255,255,255,.45);
-}
 window.addEventListener("load", function() {
 
     const zuButton = document.querySelector("#radioBar button");
@@ -161,8 +174,7 @@ window.addEventListener("load", function() {
     playRadio("https://stream.rcast.net/68949", zuButton);
 
 });
-// pornește automat Radio ZU la încărcarea paginii
-playRadio("https://stream.rcast.net/68949");
+
 // ============================
 // Ascunde cursorul după 3 secunde
 // ============================
