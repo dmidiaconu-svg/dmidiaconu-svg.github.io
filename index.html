@@ -87,21 +87,24 @@ html,body{
 
 <div id="radioBar">
 
-<button onclick="playRadio('https://stream.rcast.net/68949')">
-ZU
-</button>
+    <button onclick="playRadio('https://stream.rcast.net/68949', this)">
+        ZU
+    </button>
 
-<button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp')">
-KISS
-</button>
+    <button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)">
+        KISS
+    </button>
 
-<button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp')">
-MAGIC
-</button>
-<button onclick="playRadio('https://listen.radioking.com/radio/701141/stream/766385')">
-PESCOBAR
-</button>
+    <button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)">
+        MAGIC
+    </button>
+
+    <button onclick="playRadio('https://listen.radioking.com/radio/701141/stream/766385', this)">
+        PESCOBAR
+    </button>
+
 </div>
+
 
 <audio id="audio" controls></audio>
 * {
@@ -118,24 +121,46 @@ function refreshImage(){
 
 setInterval(refreshImage,30000);
 
-const audio=document.getElementById("audio");
+const audio = document.getElementById("audio");
 
-function playRadio(url){
+function playRadio(url, button) {
 
     audio.pause();
 
-    audio.src=url;
+    audio.src = url;
 
     audio.load();
 
-    audio.play().catch(function(e){
-
+    audio.play().catch(function(e) {
         console.log(e);
-
     });
 
+    // Scoate active de pe toate butoanele
+    document.querySelectorAll("#radioBar button").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    // Marchează radioul selectat
+    if (button) {
+        button.classList.add("active");
+    }
+}
+#radioBar button.active {
+    background: rgba(255,255,255,.35);
+    color: #00ff66;
+    box-shadow: 0 0 10px rgba(0,255,100,.5);
 }
 
+#radioBar button.active:hover {
+    background: rgba(255,255,255,.45);
+}
+window.addEventListener("load", function() {
+
+    const zuButton = document.querySelector("#radioBar button");
+
+    playRadio("https://stream.rcast.net/68949", zuButton);
+
+});
 // pornește automat Radio ZU la încărcarea paginii
 playRadio("https://stream.rcast.net/68949");
 // ============================
