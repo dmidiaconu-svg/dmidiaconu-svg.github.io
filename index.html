@@ -96,6 +96,69 @@ html,body{
 #radioBar button.active:hover{
     background:rgba(255,255,255,.45);
 }
+/* ============================
+   DATA SI ORA
+   ============================ */
+
+#dateTime {
+    position: absolute;
+
+    top: 20%;
+    right: 5.5%;
+
+    width: 220px;
+
+    text-align: center;
+
+    font-family: Arial, sans-serif;
+
+    color: #333;
+
+    z-index: 100;
+
+    pointer-events: none;
+}
+
+#clock {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+#date {
+    margin-top: 10px;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+}
+
+#day {
+    margin-top: 5px;
+
+    font-size: 13px;
+    color: #666;
+
+    letter-spacing: 2px;
+}
+
+/* linie albastra discreta */
+#dateTime::before {
+    content: "";
+
+    display: block;
+
+    width: 55px;
+    height: 3px;
+
+    background: #004A98;
+
+    margin: 0 auto 12px auto;
+
+    border-radius: 3px;
+}    
 </style>
 
 </head>
@@ -103,6 +166,16 @@ html,body{
 <body>
 
 <img id="dashboard" src="Slide1.PNG">
+
+<div id="dateTime">
+
+    <div id="clock">00:00:00</div>
+
+    <div id="date">21 AUGUST 2026</div>
+
+    <div id="day">FRIDAY</div>
+
+</div>
 
 <div id="radioBar">
 
@@ -196,6 +269,62 @@ showCursor();
 
 // La orice mișcare a mouse-ului
 document.addEventListener("mousemove", showCursor);
+// ============================
+// DATA SI ORA
+// ============================
+
+function updateDateTime() {
+
+    const now = new Date();
+
+    // Ora
+    const time = now.toLocaleTimeString("ro-RO", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+
+    // Data
+    const months = [
+        "IANUARIE",
+        "FEBRUARIE",
+        "MARTIE",
+        "APRILIE",
+        "MAI",
+        "IUNIE",
+        "IULIE",
+        "AUGUST",
+        "SEPTEMBRIE",
+        "OCTOMBRIE",
+        "NOIEMBRIE",
+        "DECEMBRIE"
+    ];
+
+    const days = [
+        "DUMINICA",
+        "LUNI",
+        "MARȚI",
+        "MIERCURI",
+        "JOI",
+        "VINERI",
+        "SÂMBĂTĂ"
+    ];
+
+    const date =
+        now.getDate() +
+        " " +
+        months[now.getMonth()] +
+        " " +
+        now.getFullYear();
+
+    document.getElementById("clock").textContent = time;
+    document.getElementById("date").textContent = date;
+    document.getElementById("day").textContent = days[now.getDay()];
+}
+
+updateDateTime();
+
+setInterval(updateDateTime, 1000);
 </script>
 
 </body>
