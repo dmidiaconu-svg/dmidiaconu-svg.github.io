@@ -158,6 +158,55 @@ html,body{
     margin: 0 auto 9px auto;
 
     border-radius: 3px;
+/* ============================
+   VREMEA
+   ============================ */
+
+#weather {
+    margin-top: 13px;
+
+    font-size: 14px;
+
+    color: #444;
+}
+
+#weatherMain {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+}
+
+#weatherIcon {
+    font-size: 23px;
+}
+
+#temperature {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#weatherDescription {
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    color: #666;
+}
+
+#weatherCity {
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    color: #777;
+}
 }    
 </style>
 
@@ -171,9 +220,29 @@ html,body{
 
     <div id="clock">00:00:00</div>
 
-    <div id="date">21 AUGUST 2026</div>
+    <div id="date">24 AUGUST 2026</div>
 
-    <div id="day">FRIDAY</div>
+    <div id="day">LUNI</div>
+
+    <div id="weather">
+
+        <div id="weatherMain">
+
+            <span id="weatherIcon">☀️</span>
+
+            <span id="temperature">--°C</span>
+
+        </div>
+
+        <div id="weatherDescription">
+            Se încarcă...
+        </div>
+
+        <div id="weatherCity">
+            BRAȘOV
+        </div>
+
+    </div>
 
 </div>
 
@@ -325,6 +394,121 @@ function updateDateTime() {
 updateDateTime();
 
 setInterval(updateDateTime, 1000);
+// ============================
+// VREMEA - BRASOV
+// ============================
+
+async function updateWeather() {
+
+    try {
+
+        const latitude = 45.6579;
+        const longitude = 25.6012;
+
+        const url =
+            "https://api.open-meteo.com/v1/forecast" +
+            "?latitude=" + latitude +
+            "&longitude=" + longitude +
+            "&current=temperature_2m,weather_code,is_day" +
+            "&timezone=Europe%2FBucharest";
+
+        const response = await fetch(url);
+
+        const data = await response.json();
+
+        const temperature =
+            Math.round(data.current.temperature_2m);
+
+        const weatherCode =
+            data.current.weather_code;
+
+        const isDay =
+            data.current.is_day;
+
+        let icon = "☀️";
+        let description = "Senin";
+
+
+        // Codurile meteo WMO
+        if (weatherCode === 0) {
+
+            icon = isDay ? "☀️" : "🌙";
+            description = "Senin";
+
+        } else if (weatherCode === 1 ||
+                   weatherCode === 2) {
+
+            icon = isDay ? "🌤️" : "☁️";
+            description = "Parțial noros";
+
+        } else if (weatherCode === 3) {
+
+            icon = "☁️";
+            description = "Înnorat";
+
+        } else if (weatherCode === 45 ||
+                   weatherCode === 48) {
+
+            icon = "🌫️";
+            description = "Ceață";
+
+        } else if (weatherCode >= 51 &&
+                   weatherCode <= 57) {
+
+            icon = "🌦️";
+            description = "Burniță";
+
+        } else if (weatherCode >= 61 &&
+                   weatherCode <= 67) {
+
+            icon = "🌧️";
+            description = "Ploaie";
+
+        } else if (weatherCode >= 71 &&
+                   weatherCode <= 77) {
+
+            icon = "❄️";
+            description = "Ninsoare";
+
+        } else if (weatherCode >= 80 &&
+                   weatherCode <= 82) {
+
+            icon = "🌦️";
+            description = "Averse";
+
+        } else if (weatherCode >= 95) {
+
+            icon = "⛈️";
+            description = "Furtună";
+        }
+
+
+        document.getElementById("weatherIcon").textContent = icon;
+
+        document.getElementById("temperature").textContent =
+            temperature + "°C";
+
+        document.getElementById("weatherDescription").textContent =
+            description;
+
+    }
+
+    catch (error) {
+
+        console.log("Eroare vreme:", error);
+
+        document.getElementById("weatherDescription").textContent =
+            "Date indisponibile";
+
+    }
+}
+
+
+// Prima actualizare
+updateWeather();
+
+// Actualizare vreme la fiecare 10 minute
+setInterval(updateWeather, 600000);
 </script>
 
 </body>
