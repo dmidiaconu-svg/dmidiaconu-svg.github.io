@@ -248,10 +248,17 @@ html,body{
     <button onclick="playRadio('https://live.superfm.ro/stream.mp3', this)">
         SUPER FM
     </button>
+    
+    <button onclick="playRadio('https://live.radio-impuls.ro/stream', this)">
+    IMPULS
+    </button>
 
 </div>
 
-
+<a href="Slide1.PNG" download="Slide1.PNG" id="downloadButton">
+    ↓
+</a>
+    
 <audio id="audio" controls></audio>
 
 <script>
@@ -494,6 +501,43 @@ updateWeather();
 
 // Actualizare vreme la fiecare 10 minute
 setInterval(updateWeather, 600000);
+#downloadButton {
+    position: absolute;
+
+    right: 15px;
+    bottom: 15px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,.45);
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+
+    opacity: .35;
+
+    transition: .3s;
+
+    z-index: 999;
+}
+
+#downloadButton:hover {
+    opacity: 1;
+
+    background: rgba(0,0,0,.7);
+
+    transform: scale(1.1);
+}
 </script>
 
 </body>
