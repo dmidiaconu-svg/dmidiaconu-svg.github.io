@@ -270,13 +270,13 @@ html,body{
 </div>
 
 <div id="radioBar">
-
-    <button onclick="playRadio('https://stream.rcast.net/68949', this)">
-        ZU
-    </button>
-
+    
     <button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)">
         KISS
+    </button>
+    
+    <button onclick="playRadio('https://stream.rcast.net/68949', this)">
+        ZU
     </button>
 
     <button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)">
@@ -337,9 +337,9 @@ function playRadio(url, button) {
 
 window.addEventListener("load", function() {
 
-    const zuButton = document.querySelector("#radioBar button");
+    const kissButton = document.querySelector("#radioBar button");
 
-    playRadio("https://stream.rcast.net/68949", zuButton);
+    playRadio("https://live.kissfm.ro/kissfm.aacp", kissButton);
 
 });
 
