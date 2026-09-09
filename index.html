@@ -99,7 +99,10 @@ html,body{
 /* ============================
    DATA SI ORA
    ============================ */
-
+#dashboard {
+    transition: opacity .4s ease;
+}
+    
 #dateTime {
     position: absolute;
 
@@ -301,10 +304,20 @@ html,body{
 
 <script>
 
-function refreshImage(){
+function refreshImage() {
 
-    document.getElementById("dashboard").src =
-        "Slide1.PNG?t=" + new Date().getTime();
+    const dashboard = document.getElementById("dashboard");
+
+    dashboard.style.opacity = "0.3";
+
+    setTimeout(function() {
+
+        dashboard.src =
+            "Slide1.PNG?t=" + new Date().getTime();
+
+        dashboard.style.opacity = "1";
+
+    }, 300);
 
 }
 
@@ -363,6 +376,19 @@ showCursor();
 
 document.addEventListener("mousemove", showCursor);
 
+document.addEventListener("dblclick", function() {
+
+    if (!document.fullscreenElement) {
+
+        document.documentElement.requestFullscreen();
+
+    } else {
+
+        document.exitFullscreen();
+
+    }
+
+});    
 // La încărcarea paginii
 showCursor();
 
