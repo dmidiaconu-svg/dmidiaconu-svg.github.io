@@ -293,6 +293,42 @@ html,body{
 </head>
 
 <body>
+<header id="siteHeader">
+
+    <div class="logo">
+
+        <div class="company">
+            STABILUS
+        </div>
+
+        <div class="department">
+            ROSO GS-SP • SAMPLE SHOP
+        </div>
+
+    </div>
+
+    <div class="title">
+        Sample Shop Dashboard
+    </div>
+
+    <div class="status">
+
+        <div class="live">
+            <span class="live-dot"></span>
+            LIVE
+        </div>
+
+        <div id="headerClock">
+            --:--:--
+        </div>
+
+        <div id="lastRefresh">
+            Dashboard online
+        </div>
+
+    </div>
+
+</header>
 
 <div id="startScreen">
     <div>
@@ -359,6 +395,162 @@ html,body{
 <audio id="audio" controls></audio>
 
 <script>
+
+/* ============================
+   HEADER STABILUS
+   ============================ */
+
+#siteHeader {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    height: 75px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    padding: 0 25px;
+
+    z-index: 500;
+
+    font-family: Arial, sans-serif;
+
+    color: #333;
+
+    pointer-events: none;
+}
+
+
+/* LOGO */
+
+#siteHeader .logo {
+
+    display: flex;
+
+    flex-direction: column;
+
+    line-height: 1.1;
+}
+
+#siteHeader .company {
+
+    font-size: 24px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+#siteHeader .department {
+
+    margin-top: 4px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    color: #555;
+}
+
+
+/* TITLU */
+
+#siteHeader .title {
+
+    font-size: 21px;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+}
+
+
+/* STATUS */
+
+#siteHeader .status {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 3px;
+
+    min-width: 150px;
+}
+
+#siteHeader .live {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+#siteHeader .live-dot {
+
+    width: 8px;
+    height: 8px;
+
+    background: #00c853;
+
+    border-radius: 50%;
+
+    animation: livePulse 1.5s infinite;
+}
+
+@keyframes livePulse {
+
+    0% {
+        box-shadow: 0 0 0 0 rgba(0,200,83,.6);
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px rgba(0,200,83,0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0,200,83,0);
+    }
+}
+
+#headerClock {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+#lastRefresh {
+
+    font-size: 9px;
+
+    color: #666;
+
+    letter-spacing: .5px;
+}
 
 function refreshImage() {
 
