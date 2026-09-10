@@ -287,115 +287,7 @@ html,body{
     background: rgba(0,0,0,.7);
 
     transform: scale(1.1);
-}    
-</style>
-
-</head>
-
-<body>
-<header id="siteHeader">
-
-    <div class="logo">
-
-        <div class="company">
-            STABILUS
-        </div>
-
-        <div class="department">
-            ROSO GS-SP • SAMPLE SHOP
-        </div>
-
-    </div>
-
-    <div class="title">
-        Sample Shop Dashboard
-    </div>
-
-    <div class="status">
-
-        <div class="live">
-            <span class="live-dot"></span>
-            LIVE
-        </div>
-
-        <div id="headerClock">
-            --:--:--
-        </div>
-
-        <div id="lastRefresh">
-            Dashboard online
-        </div>
-
-    </div>
-
-</header>
-
-<div id="startScreen">
-    <div>
-        <h1>KPI DASHBOARD</h1>
-        <p>Click pentru pornire</p>
-    </div>
-</div>
-
-<img id="dashboard" src="Slide1.PNG">
-
-<div id="dateTime">
-
-    <div id="clock">00:00:00</div>
-
-    <div id="date">24 AUGUST 2026</div>
-
-    <div id="day">LUNI</div>
-
-    <div id="weather">
-
-        <div id="weatherMain">
-
-            <span id="weatherIcon">☀️</span>
-
-            <span id="temperature">--°C</span>
-
-        </div>
-
-        <div id="weatherDescription">
-            Se încarcă...
-        </div>
-    </div>
-
-</div>
-
-<div id="radioBar">
-    
-    <button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)">
-        KISS
-    </button>
-    
-    <button onclick="playRadio('https://stream.rcast.net/68949', this)">
-        ZU
-    </button>
-
-    <button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)">
-        MAGIC
-    </button>
-
-    <button onclick="playRadio('https://live.superfm.ro/stream.mp3', this)">
-        SUPER FM
-    </button>
-    
-    <button onclick="playRadio('https://live.radio-impuls.ro/stream', this)">
-    IMPULS
-    </button>
-
-</div>
-
-<a href="Slide1.PNG" download="Slide1.PNG" id="downloadButton">
-    ↓
-</a>
-    
-<audio id="audio" controls></audio>
-
-<script>
-
+}
 /* ============================
    HEADER STABILUS
    ============================ */
@@ -551,6 +443,115 @@ html,body{
 
     letter-spacing: .5px;
 }
+</style>
+
+</head>
+
+<body>
+<header id="siteHeader">
+
+    <div class="logo">
+
+        <div class="company">
+            STABILUS
+        </div>
+
+        <div class="department">
+            ROSO GS-SP • SAMPLE SHOP
+        </div>
+
+    </div>
+
+    <div class="title">
+        Sample Shop Dashboard
+    </div>
+
+    <div class="status">
+
+        <div class="live">
+            <span class="live-dot"></span>
+            LIVE
+        </div>
+
+        <div id="headerClock">
+            --:--:--
+        </div>
+
+        <div id="lastRefresh">
+            Dashboard online
+        </div>
+
+    </div>
+
+</header>
+
+<div id="startScreen">
+    <div>
+        <h1>KPI DASHBOARD</h1>
+        <p>Click pentru pornire</p>
+    </div>
+</div>
+
+<img id="dashboard" src="Slide1.PNG">
+
+<div id="dateTime">
+
+    <div id="clock">00:00:00</div>
+
+    <div id="date">24 AUGUST 2026</div>
+
+    <div id="day">LUNI</div>
+
+    <div id="weather">
+
+        <div id="weatherMain">
+
+            <span id="weatherIcon">☀️</span>
+
+            <span id="temperature">--°C</span>
+
+        </div>
+
+        <div id="weatherDescription">
+            Se încarcă...
+        </div>
+    </div>
+
+</div>
+
+<div id="radioBar">
+    
+    <button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)">
+        KISS
+    </button>
+    
+    <button onclick="playRadio('https://stream.rcast.net/68949', this)">
+        ZU
+    </button>
+
+    <button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)">
+        MAGIC
+    </button>
+
+    <button onclick="playRadio('https://live.superfm.ro/stream.mp3', this)">
+        SUPER FM
+    </button>
+    
+    <button onclick="playRadio('https://live.radio-impuls.ro/stream', this)">
+    IMPULS
+    </button>
+
+</div>
+
+<a href="Slide1.PNG" download="Slide1.PNG" id="downloadButton">
+    ↓
+</a>
+    
+<audio id="audio" controls></audio>
+
+<script>
+
+
 
 function refreshImage() {
 
@@ -616,19 +617,7 @@ showCursor();
 
 document.addEventListener("mousemove", showCursor);
 
-document.addEventListener("click", function() {
-
-    if (!document.fullscreenElement) {
-
-        document.documentElement.requestFullscreen();
-
-    } else {
-
-        document.exitFullscreen();
-
-    }
-
-});    
+   
 // La încărcarea paginii
 showCursor();
 
@@ -682,7 +671,9 @@ function updateDateTime() {
         " " +
         now.getFullYear();
 
+
     document.getElementById("clock").textContent = time;
+    document.getElementById("headerClock").textContent = time;
     document.getElementById("date").textContent = date;
     document.getElementById("day").textContent = days[now.getDay()];
 }
