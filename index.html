@@ -321,7 +321,7 @@ html, body {
 
 
 /* =========================================================
-   BULINA KPI
+   KPI LED - STRONG GLOW
    ========================================================= */
 
 .led {
@@ -335,75 +335,146 @@ html, body {
 
     border-radius: 50%;
 
-    border: 1px solid rgba(30, 41, 59, .55);
+    border: 1px solid rgba(30, 41, 59, .45);
 
-    transition: background .25s ease;
+    z-index: 2;
 
-    animation: kpiPulse 1.8s ease-in-out infinite;
+    animation: ledPulse 1.6s ease-in-out infinite;
 }
 
 
-/* VERDE */
+/* HALO EXTERIOR */
+
+.led::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%) scale(1);
+
+    z-index: -1;
+
+    animation: haloPulse 1.6s ease-out infinite;
+}
+
+
+/* =========================================================
+   VERDE
+   ========================================================= */
 
 .led.green {
     background: rgb(34, 197, 94);
 
     box-shadow:
-        0 0 10px rgba(34, 197, 94, .8),
-        0 0 22px rgba(34, 197, 94, .45);
+        0 0 8px rgba(34,197,94,1),
+        0 0 18px rgba(34,197,94,.95),
+        0 0 35px rgba(34,197,94,.75),
+        0 0 55px rgba(34,197,94,.45);
+}
+
+.led.green::after {
+    background: rgba(34,197,94,.55);
 }
 
 
-/* PORTOCALIU */
+/* =========================================================
+   PORTOCALIU
+   ========================================================= */
 
 .led.orange {
     background: rgb(245, 158, 11);
 
     box-shadow:
-        0 0 10px rgba(245, 158, 11, .85),
-        0 0 22px rgba(245, 158, 11, .5);
+        0 0 8px rgba(245,158,11,1),
+        0 0 18px rgba(245,158,11,.95),
+        0 0 35px rgba(245,158,11,.75),
+        0 0 55px rgba(245,158,11,.45);
+}
+
+.led.orange::after {
+    background: rgba(245,158,11,.55);
 }
 
 
-/* ROSU */
+/* =========================================================
+   ROSU
+   ========================================================= */
 
 .led.red {
     background: rgb(220, 38, 38);
 
     box-shadow:
-        0 0 10px rgba(220, 38, 38, .85),
-        0 0 22px rgba(220, 38, 38, .5);
+        0 0 8px rgba(220,38,38,1),
+        0 0 18px rgba(220,38,38,.95),
+        0 0 35px rgba(220,38,38,.75),
+        0 0 55px rgba(220,38,38,.45);
+}
+
+.led.red::after {
+    background: rgba(220,38,38,.55);
 }
 
 
 /* =========================================================
-   ANIMATIE PULSE
+   BULINA RESPIRA
    ========================================================= */
 
-@keyframes kpiPulse {
+@keyframes ledPulse {
 
-    0% {
+    0%, 100% {
         transform: scale(1);
-
         filter: brightness(1);
-
-        opacity: .95;
     }
 
     50% {
-        transform: scale(1.08);
+        transform: scale(1.10);
+        filter: brightness(1.55);
+    }
+}
 
-        filter: brightness(1.35);
 
-        opacity: 1;
+/* =========================================================
+   HALO SE EXTINDE
+   ========================================================= */
+
+@keyframes haloPulse {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+
+        opacity: .65;
+
+        filter: blur(3px);
+    }
+
+    70% {
+        transform:
+            translate(-50%, -50%)
+            scale(1.8);
+
+        opacity: .15;
+
+        filter: blur(9px);
     }
 
     100% {
-        transform: scale(1);
+        transform:
+            translate(-50%, -50%)
+            scale(2);
 
-        filter: brightness(1);
+        opacity: 0;
 
-        opacity: .95;
+        filter: blur(12px);
     }
 }
 /* RADIO BAR */
