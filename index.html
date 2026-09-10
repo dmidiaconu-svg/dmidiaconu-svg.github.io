@@ -8,6 +8,61 @@
 
 <style>
 
+<div id="startScreen">
+    <div>
+        <h1>KPI DASHBOARD</h1>
+        <p>Click pentru pornire</p>
+    </div>
+</div>
+
+#startScreen {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: black;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    font-family: Arial;
+
+    z-index: 9999;
+
+    cursor: pointer;
+}
+
+#startScreen h1 {
+
+    letter-spacing: 5px;
+
+    font-size: 32px;
+}
+
+#startScreen p {
+
+    color: #aaa;
+
+    font-size: 16px;
+
+    animation: pulseText 1.5s infinite;
+}
+
+@keyframes pulseText {
+
+    50% {
+        opacity: .4;
+    }
+}
+    
 html,body{
     margin:0;
     padding:0;
@@ -566,6 +621,20 @@ updateWeather();
 // Actualizare vreme la fiecare 10 minute
 setInterval(updateWeather, 600000);
 
+document.getElementById("startScreen").addEventListener("click", function() {
+
+    document.documentElement.requestFullscreen();
+
+    this.style.display = "none";
+
+    const kissButton = document.querySelector("#radioBar button");
+
+    playRadio(
+        "https://live.kissfm.ro/kissfm.aacp",
+        kissButton
+    );
+
+});    
 </script>
 
 </body>
