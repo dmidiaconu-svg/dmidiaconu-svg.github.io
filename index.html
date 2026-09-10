@@ -4,30 +4,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard KPI</title>
+<title>Sample Shop Dashboard</title>
 
 <style>
 
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================================================
+   START SCREEN
+   ========================================================= */
 
 #startScreen {
 
     position: fixed;
-
     inset: 0;
 
     background: black;
-
     color: white;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
 
-    font-family: Arial;
+    font-family: Arial, sans-serif;
 
     z-index: 9999;
 
@@ -39,6 +54,8 @@
     letter-spacing: 5px;
 
     font-size: 32px;
+
+    margin-bottom: 15px;
 }
 
 #startScreen p {
@@ -56,241 +73,33 @@
         opacity: .4;
     }
 }
-    
-html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:black;
-}
-
-#radioBar button.active {
-    background: rgba(255,255,255,.35);
-    color: #00ff66;
-    box-shadow: 0 0 10px rgba(0,255,100,.5);
-}
-
-#radioBar button.active:hover {
-    background: rgba(255,255,255,.45);
-}
-#dashboard{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-#radioBar{
-    position:absolute;
-    left:15px;
-    bottom:15px;
-    z-index:999;
-
-    background:rgba(0,0,0,.45);
-    backdrop-filter:blur(10px);
-
-    border-radius:30px;
-
-    padding:8px 10px;
-
-    opacity:.70;
-
-    transition:.3s;
-}
-    
-#radioBar:hover{
-    opacity:1;
-}
-
-#radioBar button{
-
-    background:transparent;
-
-    border:none;
-
-    color:white;
-
-    cursor:pointer;
-
-    font-size:13px;
-
-    padding:6px 10px;
-
-    border-radius:20px;
-}
-
-#radioBar button:hover{
-
-    background:rgba(255,255,255,.25);
-
-}
-
-#audio{
-
-    display:none;
-    
-}
 
 
-#radioBar button.active{
-    background:rgba(255,255,255,.35);
-    color:#00ff66;
-    box-shadow:0 0 10px rgba(0,255,100,.5);
-}
+/* =========================================================
+   DASHBOARD IMAGE
+   ========================================================= */
 
-#radioBar button.active:hover{
-    background:rgba(255,255,255,.45);
-}
-/* ============================
-   DATA SI ORA
-   ============================ */
 #dashboard {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
     transition: opacity .4s ease;
-}
-    
-#dateTime {
-    position: absolute;
 
-    top: 9%;
-    right: 1.5%;
-
-    width: 190px;
-
-    text-align: center;
-
-    font-family: Arial, sans-serif;
-
-    color: #333;
-
-    z-index: 100;
-
-    pointer-events: none;
+    z-index: 1;
 }
 
-#clock {
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    line-height: 1;
-}
 
-#date {
-    margin-top: 8px;
-
-    font-size: 18px;
-    font-weight: 600;
-
-    letter-spacing: 1.2px;
-}
-
-#day {
-    margin-top: 4px;
-
-    font-size: 16px;
-    color: #666;
-
-    letter-spacing: 1.5px;
-}
-
-/* linie albastra discreta */
-#dateTime::before {
-    content: "";
-
-    display: block;
-
-    width: 45px;
-    height: 2px;
-
-    background: #004A98;
-
-    margin: 0 auto 9px auto;
-
-    border-radius: 3px;
-}
-/* ============================
-   VREMEA
-   ============================ */
-
-#weather {
-    margin-top: 13px;
-
-    font-size: 14px;
-
-    color: #444;
-}
-
-#weatherMain {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 7px;
-}
-
-#weatherIcon {
-    font-size: 30px;
-}
-
-#temperature {
-    font-size: 27px;
-    font-weight: 700;
-}
-
-#weatherDescription {
-    margin-top: 3px;
-
-    font-size: 16px;
-
-    letter-spacing: 1px;
-
-    color: #666;
-}
-    
-#downloadButton {
-    position: absolute;
-
-    right: 15px;
-    bottom: 15px;
-
-    width: 28px;
-    height: 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0,0,0,.45);
-
-    color: white;
-
-    text-decoration: none;
-
-    border-radius: 50%;
-
-    font-size: 18px;
-
-    opacity: 1;
-
-    transition: .3s;
-
-    z-index: 999;
-}
-
-#downloadButton:hover {
-    opacity: 1;
-
-    background: rgba(0,0,0,.7);
-
-    transform: scale(1.1);
-}
-/* ============================
-   HEADER STABILUS
-   ============================ */
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 #siteHeader {
 
@@ -300,18 +109,15 @@ html,body{
     left: 0;
 
     width: 100%;
-
-    height: 75px;
+    height: 82px;
 
     display: flex;
 
-    align-items: center;
+    align-items: stretch;
 
     justify-content: space-between;
 
     box-sizing: border-box;
-
-    padding: 0 25px;
 
     z-index: 500;
 
@@ -323,55 +129,107 @@ html,body{
 }
 
 
-/* LOGO */
+/* =========================================================
+   STABILUS BRANDING
+   ========================================================= */
 
 #siteHeader .logo {
+
+    height: 82px;
+
+    min-width: 245px;
+
+    padding: 0 28px;
+
+    box-sizing: border-box;
 
     display: flex;
 
     flex-direction: column;
 
-    line-height: 1.1;
+    justify-content: center;
+
+    background: #004A98;
+
+    color: white;
+
+    border-bottom-right-radius: 8px;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,.18);
 }
+
+
+/* STABILUS */
 
 #siteHeader .company {
 
-    font-size: 24px;
+    font-size: 25px;
 
     font-weight: 800;
 
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
+
+    line-height: 1;
 }
+
+
+/* DEPARTMENT */
 
 #siteHeader .department {
 
-    margin-top: 4px;
+    margin-top: 7px;
 
-    font-size: 11px;
+    font-size: 10px;
 
     font-weight: 600;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1.4px;
 
-    color: #555;
+    opacity: .9;
 }
 
 
-/* TITLU */
+/* =========================================================
+   TITLU CENTRAL
+   ========================================================= */
 
 #siteHeader .title {
 
-    font-size: 21px;
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 22px;
 
     font-weight: 600;
 
     letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    color: #333;
+
+    text-shadow: 0 1px 3px rgba(255,255,255,.7);
 }
 
 
-/* STATUS */
+/* =========================================================
+   STATUS / INFO DREAPTA
+   ========================================================= */
 
 #siteHeader .status {
+
+    height: 82px;
+
+    min-width: 290px;
+
+    padding: 8px 25px 7px 15px;
+
+    box-sizing: border-box;
 
     display: flex;
 
@@ -379,10 +237,21 @@ html,body{
 
     align-items: flex-end;
 
-    gap: 3px;
+    justify-content: center;
 
-    min-width: 150px;
+    gap: 2px;
+
+    background: rgba(255,255,255,.70);
+
+    backdrop-filter: blur(5px);
+
+    border-bottom-left-radius: 10px;
 }
+
+
+/* =========================================================
+   LIVE
+   ========================================================= */
 
 #siteHeader .live {
 
@@ -392,11 +261,13 @@ html,body{
 
     gap: 6px;
 
-    font-size: 11px;
+    font-size: 10px;
 
     font-weight: 700;
 
     letter-spacing: 1.5px;
+
+    color: #333;
 }
 
 #siteHeader .live-dot {
@@ -426,29 +297,434 @@ html,body{
     }
 }
 
+
+/* =========================================================
+   CEAS
+   ========================================================= */
+
 #headerClock {
 
-    font-size: 18px;
+    font-size: 20px;
 
     font-weight: 700;
 
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+
+    line-height: 1.1;
+
+    color: #222;
 }
 
-#lastRefresh {
+
+/* =========================================================
+   DATA + ZI
+   ========================================================= */
+
+#headerDate {
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    color: #444;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   VREMEA
+   ========================================================= */
+
+#headerWeather {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 10px;
+
+    color: #555;
+
+    margin-top: 1px;
+}
+
+#headerWeatherIcon {
+
+    font-size: 15px;
+
+    line-height: 1;
+}
+
+#headerTemperature {
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: #333;
+}
+
+#headerWeatherDescription {
 
     font-size: 9px;
 
     color: #666;
 
-    letter-spacing: .5px;
+    letter-spacing: .3px;
 }
+
+
+/* =========================================================
+   UPDATED
+   ========================================================= */
+
+#lastRefresh {
+
+    font-size: 8px;
+
+    color: #777;
+
+    letter-spacing: .5px;
+
+    margin-top: 1px;
+}
+
+
+/* =========================================================
+   RADIO BAR
+   ========================================================= */
+
+#radioBar {
+
+    position: absolute;
+
+    left: 15px;
+    bottom: 15px;
+
+    z-index: 999;
+
+    background: rgba(0,0,0,.45);
+
+    backdrop-filter: blur(10px);
+
+    border-radius: 30px;
+
+    padding: 8px 10px;
+
+    opacity: .70;
+
+    transition: .3s;
+}
+
+#radioBar:hover {
+
+    opacity: 1;
+}
+
+
+#radioBar button {
+
+    background: transparent;
+
+    border: none;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    transition: .2s;
+}
+
+#radioBar button:hover {
+
+    background: rgba(255,255,255,.25);
+}
+
+
+/* RADIO ACTIV */
+
+#radioBar button.active {
+
+    background: rgba(255,255,255,.35);
+
+    color: #00ff66;
+
+    box-shadow: 0 0 10px rgba(0,255,100,.5);
+}
+
+#radioBar button.active:hover {
+
+    background: rgba(255,255,255,.45);
+}
+
+
+/* =========================================================
+   AUDIO
+   ========================================================= */
+
+#audio {
+
+    display: none;
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+   ========================================================= */
+
+#downloadButton {
+
+    position: absolute;
+
+    right: 15px;
+    bottom: 15px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,.45);
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+
+    opacity: .75;
+
+    transition: .3s;
+
+    z-index: 999;
+}
+
+#downloadButton:hover {
+
+    opacity: 1;
+
+    background: rgba(0,0,0,.7);
+
+    transform: scale(1.1);
+}
+
+
+/* =========================================================
+   RESPONSIVE - ECRANE MAI MICI
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    #siteHeader .logo {
+
+        min-width: 200px;
+
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    #siteHeader .company {
+
+        font-size: 21px;
+    }
+
+    #siteHeader .department {
+
+        font-size: 8px;
+    }
+
+    #siteHeader .title {
+
+        font-size: 17px;
+    }
+
+    #siteHeader .status {
+
+        min-width: 235px;
+
+        padding-right: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - TV / FULLSCREEN
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    #siteHeader {
+
+        height: 90px;
+    }
+
+    #siteHeader .logo {
+
+        height: 90px;
+
+        min-width: 280px;
+
+        padding-left: 35px;
+    }
+
+    #siteHeader .company {
+
+        font-size: 29px;
+    }
+
+    #siteHeader .department {
+
+        font-size: 11px;
+    }
+
+    #siteHeader .title {
+
+        font-size: 25px;
+    }
+
+    #siteHeader .status {
+
+        height: 90px;
+
+        min-width: 330px;
+
+        padding-right: 30px;
+    }
+
+    #headerClock {
+
+        font-size: 23px;
+    }
+
+    #headerDate {
+
+        font-size: 11px;
+    }
+
+    #headerTemperature {
+
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    #siteHeader .logo {
+
+        min-width: 170px;
+
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    #siteHeader .company {
+
+        font-size: 18px;
+    }
+
+    #siteHeader .department {
+
+        font-size: 7px;
+
+        letter-spacing: 1px;
+    }
+
+    #siteHeader .title {
+
+        display: none;
+    }
+
+    #siteHeader .status {
+
+        min-width: 190px;
+
+        padding-right: 12px;
+    }
+
+    #headerClock {
+
+        font-size: 17px;
+    }
+
+    #headerDate {
+
+        font-size: 8px;
+    }
+
+    #headerWeatherDescription {
+
+        display: none;
+    }
+
+}
+
 </style>
 
 </head>
 
+
 <body>
+
+
+<!-- ======================================================
+     START SCREEN
+     ====================================================== -->
+
+<div id="startScreen">
+
+    <div>
+
+        <h1>KPI DASHBOARD</h1>
+
+        <p>Click pentru pornire</p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     DASHBOARD IMAGE
+     ====================================================== -->
+
+<img
+    id="dashboard"
+    src="Slide1.PNG"
+    alt="Sample Shop KPI Dashboard"
+>
+
+
+<!-- ======================================================
+     HEADER
+     ====================================================== -->
+
 <header id="siteHeader">
+
+
+    <!-- STABILUS -->
 
     <div class="logo">
 
@@ -462,107 +738,165 @@ html,body{
 
     </div>
 
+
+    <!-- TITLU CENTRAL -->
+
     <div class="title">
         Sample Shop Dashboard
     </div>
 
+
+    <!-- STATUS / INFO -->
+
     <div class="status">
 
+
+        <!-- LIVE -->
+
         <div class="live">
+
             <span class="live-dot"></span>
+
             LIVE
+
         </div>
+
+
+        <!-- CEAS -->
 
         <div id="headerClock">
             --:--:--
         </div>
 
-        <div id="lastRefresh">
-            Dashboard online
+
+        <!-- DATA + ZI -->
+
+        <div id="headerDate">
+            -- -------- ---- • --------
         </div>
+
+
+        <!-- VREMEA -->
+
+        <div id="headerWeather">
+
+            <span id="headerWeatherIcon">
+                ☀️
+            </span>
+
+            <span id="headerTemperature">
+                --°C
+            </span>
+
+            <span id="headerWeatherDescription">
+                Se încarcă...
+            </span>
+
+        </div>
+
+
+        <!-- LAST REFRESH -->
+
+        <div id="lastRefresh">
+            Updated --
+        </div>
+
 
     </div>
 
 </header>
 
-<div id="startScreen">
-    <div>
-        <h1>KPI DASHBOARD</h1>
-        <p>Click pentru pornire</p>
-    </div>
-</div>
 
-<img id="dashboard" src="Slide1.PNG">
-
-<div id="dateTime">
-
-    <div id="clock">00:00:00</div>
-
-    <div id="date">24 AUGUST 2026</div>
-
-    <div id="day">LUNI</div>
-
-    <div id="weather">
-
-        <div id="weatherMain">
-
-            <span id="weatherIcon">☀️</span>
-
-            <span id="temperature">--°C</span>
-
-        </div>
-
-        <div id="weatherDescription">
-            Se încarcă...
-        </div>
-    </div>
-
-</div>
+<!-- ======================================================
+     RADIO
+     ====================================================== -->
 
 <div id="radioBar">
-    
-    <button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)">
+
+
+    <button
+        onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)"
+    >
         KISS
     </button>
-    
-    <button onclick="playRadio('https://stream.rcast.net/68949', this)">
+
+
+    <button
+        onclick="playRadio('https://stream.rcast.net/68949', this)"
+    >
         ZU
     </button>
 
-    <button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)">
+
+    <button
+        onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)"
+    >
         MAGIC
     </button>
 
-    <button onclick="playRadio('https://live.superfm.ro/stream.mp3', this)">
+
+    <button
+        onclick="playRadio('https://live.superfm.ro/stream.mp3', this)"
+    >
         SUPER FM
     </button>
-    
-    <button onclick="playRadio('https://live.radio-impuls.ro/stream', this)">
-    IMPULS
+
+
+    <button
+        onclick="playRadio('https://live.radio-impuls.ro/stream', this)"
+    >
+        IMPULS
     </button>
+
 
 </div>
 
-<a href="Slide1.PNG" download="Slide1.PNG" id="downloadButton">
+
+<!-- ======================================================
+     DOWNLOAD
+     ====================================================== -->
+
+<a
+    href="Slide1.PNG"
+    download="Slide1.PNG"
+    id="downloadButton"
+    title="Descarcă dashboard"
+>
     ↓
 </a>
-    
-<audio id="audio" controls></audio>
+
+
+<!-- ======================================================
+     AUDIO PLAYER
+     ====================================================== -->
+
+<audio
+    id="audio"
+    controls
+></audio>
+
 
 <script>
 
 
+/* =========================================================
+   REFRESH DASHBOARD IMAGE
+   ========================================================= */
 
 function refreshImage() {
 
-    const dashboard = document.getElementById("dashboard");
+    const dashboard =
+        document.getElementById("dashboard");
+
 
     dashboard.style.opacity = "0.3";
+
 
     setTimeout(function() {
 
         dashboard.src =
-            "Slide1.PNG?t=" + new Date().getTime();
+            "Slide1.PNG?t=" +
+            new Date().getTime();
 
         dashboard.style.opacity = "1";
 
@@ -570,76 +904,134 @@ function refreshImage() {
 
 }
 
-setInterval(refreshImage,90000);
 
-const audio = document.getElementById("audio");
+/* Refresh la fiecare 90 secunde */
+
+setInterval(refreshImage, 90000);
+
+
+
+/* =========================================================
+   RADIO
+   ========================================================= */
+
+const audio =
+    document.getElementById("audio");
+
 
 function playRadio(url, button) {
 
+
     audio.pause();
+
 
     audio.src = url;
 
+
     audio.load();
 
-    audio.play().catch(function(e) {
-        console.log(e);
+
+    audio.play().catch(function(error) {
+
+        console.log("Radio playback:", error);
+
     });
 
-    // Scoate active de pe toate butoanele
-    document.querySelectorAll("#radioBar button").forEach(function(btn) {
-        btn.classList.remove("active");
-    });
 
-    // Marchează radioul selectat
+    /*
+       Scoate active de pe toate butoanele
+    */
+
+    document
+        .querySelectorAll("#radioBar button")
+        .forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    /*
+       Marchează radioul selectat
+    */
+
     if (button) {
+
         button.classList.add("active");
+
     }
+
 }
 
-// ============================
-// Ascunde cursorul după 3 secunde
-// ============================
+
+
+/* =========================================================
+   CURSOR
+   ========================================================= */
 
 let cursorTimer;
 
+
 function hideCursor() {
+
     document.body.style.cursor = "none";
+
 }
+
 
 function showCursor() {
+
     document.body.style.cursor = "auto";
+
     clearTimeout(cursorTimer);
-    cursorTimer = setTimeout(hideCursor, 3000);
+
+    cursorTimer =
+        setTimeout(hideCursor, 3000);
+
 }
 
+
 showCursor();
 
-document.addEventListener("mousemove", showCursor);
 
-   
-// La încărcarea paginii
-showCursor();
+document.addEventListener(
+    "mousemove",
+    showCursor
+);
 
-// La orice mișcare a mouse-ului
-document.addEventListener("mousemove", showCursor);
-// ============================
-// DATA SI ORA
-// ============================
+
+
+/* =========================================================
+   DATA + ORA
+   ========================================================= */
 
 function updateDateTime() {
 
+
     const now = new Date();
 
-    // Ora
-    const time = now.toLocaleTimeString("ro-RO", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    });
 
-    // Data
+    /* -------------------------
+       ORA
+       ------------------------- */
+
+    const time =
+        now.toLocaleTimeString(
+            "ro-RO",
+            {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            }
+        );
+
+
+    /* -------------------------
+       LUNI
+       ------------------------- */
+
     const months = [
+
         "IANUARIE",
         "FEBRUARIE",
         "MARTIE",
@@ -652,166 +1044,421 @@ function updateDateTime() {
         "OCTOMBRIE",
         "NOIEMBRIE",
         "DECEMBRIE"
+
     ];
 
+
+    /* -------------------------
+       ZILE
+       ------------------------- */
+
     const days = [
-        "DUMINICA",
+
+        "DUMINICĂ",
         "LUNI",
         "MARȚI",
         "MIERCURI",
         "JOI",
         "VINERI",
         "SÂMBĂTĂ"
+
     ];
 
-    const date =
+
+    /* -------------------------
+       DATA
+       ------------------------- */
+
+    const dateText =
+
         now.getDate() +
         " " +
         months[now.getMonth()] +
         " " +
-        now.getFullYear();
+        now.getFullYear() +
+        " • " +
+        days[now.getDay()];
 
 
-    document.getElementById("clock").textContent = time;
-    document.getElementById("headerClock").textContent = time;
-    document.getElementById("date").textContent = date;
-    document.getElementById("day").textContent = days[now.getDay()];
+    /* -------------------------
+       UPDATE HTML
+       ------------------------- */
+
+    document
+        .getElementById("headerClock")
+        .textContent = time;
+
+
+    document
+        .getElementById("headerDate")
+        .textContent = dateText;
+
+
+    /*
+       Updated = ora ultimei actualizări
+    */
+
+    document
+        .getElementById("lastRefresh")
+        .textContent =
+            "Updated " +
+            time.substring(0, 5);
+
 }
+
+
+/* Prima actualizare */
 
 updateDateTime();
 
-setInterval(updateDateTime, 1000);
-// ============================
-// VREMEA - BRASOV
-// ============================
+
+/* Actualizare fiecare secundă */
+
+setInterval(
+    updateDateTime,
+    1000
+);
+
+
+
+/* =========================================================
+   VREMEA - BRAȘOV
+   ========================================================= */
 
 async function updateWeather() {
 
+
     try {
 
+
         const latitude = 45.6579;
+
         const longitude = 25.6012;
 
+
         const url =
+
             "https://api.open-meteo.com/v1/forecast" +
-            "?latitude=" + latitude +
-            "&longitude=" + longitude +
+
+            "?latitude=" +
+            latitude +
+
+            "&longitude=" +
+            longitude +
+
             "&current=temperature_2m,weather_code,is_day" +
+
             "&timezone=Europe%2FBucharest";
 
-        const response = await fetch(url);
 
-        const data = await response.json();
+        const response =
+            await fetch(url);
+
+
+        const data =
+            await response.json();
+
 
         const temperature =
-            Math.round(data.current.temperature_2m);
+            Math.round(
+                data.current.temperature_2m
+            );
+
 
         const weatherCode =
             data.current.weather_code;
 
+
         const isDay =
             data.current.is_day;
 
+
         let icon = "☀️";
+
         let description = "Senin";
 
 
-        // Codurile meteo WMO
+        /* =================================================
+           CODURI METEO WMO
+           ================================================= */
+
+
         if (weatherCode === 0) {
 
-            icon = isDay ? "☀️" : "🌙";
-            description = "Senin";
 
-        } else if (weatherCode === 1 ||
-                   weatherCode === 2) {
+            icon =
+                isDay
+                    ? "☀️"
+                    : "🌙";
 
-            icon = isDay ? "🌤️" : "☁️";
-            description = "Parțial noros";
 
-        } else if (weatherCode === 3) {
+            description =
+                "Senin";
 
-            icon = "☁️";
-            description = "Înnorat";
 
-        } else if (weatherCode === 45 ||
-                   weatherCode === 48) {
-
-            icon = "🌫️";
-            description = "Ceață";
-
-        } else if (weatherCode >= 51 &&
-                   weatherCode <= 57) {
-
-            icon = "🌦️";
-            description = "Burniță";
-
-        } else if (weatherCode >= 61 &&
-                   weatherCode <= 67) {
-
-            icon = "🌧️";
-            description = "Ploaie";
-
-        } else if (weatherCode >= 71 &&
-                   weatherCode <= 77) {
-
-            icon = "❄️";
-            description = "Ninsoare";
-
-        } else if (weatherCode >= 80 &&
-                   weatherCode <= 82) {
-
-            icon = "🌦️";
-            description = "Averse";
-
-        } else if (weatherCode >= 95) {
-
-            icon = "⛈️";
-            description = "Furtună";
         }
 
 
-        document.getElementById("weatherIcon").textContent = icon;
+        else if (
+            weatherCode === 1 ||
+            weatherCode === 2
+        ) {
 
-        document.getElementById("temperature").textContent =
-            temperature + "°C";
 
-        document.getElementById("weatherDescription").textContent =
-            description;
+            icon =
+                isDay
+                    ? "🌤️"
+                    : "☁️";
+
+
+            description =
+                "Parțial noros";
+
+
+        }
+
+
+        else if (weatherCode === 3) {
+
+
+            icon =
+                "☁️";
+
+
+            description =
+                "Înnorat";
+
+
+        }
+
+
+        else if (
+            weatherCode === 45 ||
+            weatherCode === 48
+        ) {
+
+
+            icon =
+                "🌫️";
+
+
+            description =
+                "Ceață";
+
+
+        }
+
+
+        else if (
+            weatherCode >= 51 &&
+            weatherCode <= 57
+        ) {
+
+
+            icon =
+                "🌦️";
+
+
+            description =
+                "Burniță";
+
+
+        }
+
+
+        else if (
+            weatherCode >= 61 &&
+            weatherCode <= 67
+        ) {
+
+
+            icon =
+                "🌧️";
+
+
+            description =
+                "Ploaie";
+
+
+        }
+
+
+        else if (
+            weatherCode >= 71 &&
+            weatherCode <= 77
+        ) {
+
+
+            icon =
+                "❄️";
+
+
+            description =
+                "Ninsoare";
+
+
+        }
+
+
+        else if (
+            weatherCode >= 80 &&
+            weatherCode <= 82
+        ) {
+
+
+            icon =
+                "🌦️";
+
+
+            description =
+                "Averse";
+
+
+        }
+
+
+        else if (
+            weatherCode >= 95
+        ) {
+
+
+            icon =
+                "⛈️";
+
+
+            description =
+                "Furtună";
+
+
+        }
+
+
+        /* =================================================
+           UPDATE HTML
+           ================================================= */
+
+
+        document
+            .getElementById("headerWeatherIcon")
+            .textContent = icon;
+
+
+        document
+            .getElementById("headerTemperature")
+            .textContent =
+                temperature + "°C";
+
+
+        document
+            .getElementById("headerWeatherDescription")
+            .textContent =
+                description;
+
 
     }
+
 
     catch (error) {
 
-        console.log("Eroare vreme:", error);
 
-        document.getElementById("weatherDescription").textContent =
-            "Date indisponibile";
+        console.log(
+            "Eroare vreme:",
+            error
+        );
+
+
+        document
+            .getElementById(
+                "headerWeatherDescription"
+            )
+            .textContent =
+                "Date indisponibile";
+
 
     }
+
 }
 
 
-// Prima actualizare
+/* Prima actualizare */
+
 updateWeather();
 
-// Actualizare vreme la fiecare 10 minute
-setInterval(updateWeather, 600000);
 
-document.getElementById("startScreen").addEventListener("click", function() {
+/* Actualizare vreme la fiecare 10 minute */
 
-    document.documentElement.requestFullscreen();
+setInterval(
+    updateWeather,
+    600000
+);
 
-    this.style.display = "none";
 
-    const kissButton = document.querySelector("#radioBar button");
 
-    playRadio(
-        "https://live.kissfm.ro/kissfm.aacp",
-        kissButton
+/* =========================================================
+   START SCREEN
+   ========================================================= */
+
+document
+    .getElementById("startScreen")
+    .addEventListener(
+        "click",
+        function() {
+
+
+            /*
+               Fullscreen
+            */
+
+            if (
+                document.documentElement.requestFullscreen
+            ) {
+
+                document
+                    .documentElement
+                    .requestFullscreen()
+                    .catch(function(error) {
+
+                        console.log(
+                            "Fullscreen:",
+                            error
+                        );
+
+                    });
+
+            }
+
+
+            /*
+               Ascunde start screen
+            */
+
+            this.style.display =
+                "none";
+
+
+            /*
+               KISS FM implicit
+            */
+
+            const kissButton =
+                document.querySelector(
+                    "#radioBar button"
+                );
+
+
+            playRadio(
+
+                "https://live.kissfm.ro/kissfm.aacp",
+
+                kissButton
+
+            );
+
+        }
     );
 
-});    
 </script>
+
 
 </body>
 </html>
