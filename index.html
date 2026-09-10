@@ -8,12 +8,6 @@
 
 <style>
 
-<div id="startScreen">
-    <div>
-        <h1>KPI DASHBOARD</h1>
-        <p>Click pentru pornire</p>
-    </div>
-</div>
 
 #startScreen {
 
@@ -300,6 +294,13 @@ html,body{
 
 <body>
 
+<div id="startScreen">
+    <div>
+        <h1>KPI DASHBOARD</h1>
+        <p>Click pentru pornire</p>
+    </div>
+</div>
+
 <img id="dashboard" src="Slide1.PNG">
 
 <div id="dateTime">
@@ -402,14 +403,6 @@ function playRadio(url, button) {
         button.classList.add("active");
     }
 }
-
-window.addEventListener("load", function() {
-
-    const kissButton = document.querySelector("#radioBar button");
-
-    playRadio("https://live.kissfm.ro/kissfm.aacp", kissButton);
-
-});
 
 // ============================
 // Ascunde cursorul după 3 secunde
