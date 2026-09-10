@@ -3,17 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Sample Shop Dashboard</title>
 
 <style>
-
-/* =========================================================
-   GENERAL
-   ========================================================= */
-
-html,
-body {
+html, body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -23,1441 +16,773 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
-/* =========================================================
-   START SCREEN
-   ========================================================= */
-
+/* START SCREEN */
 #startScreen {
-
     position: fixed;
     inset: 0;
-
     background: black;
     color: white;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     text-align: center;
-
-    font-family: Arial, sans-serif;
-
     z-index: 9999;
-
     cursor: pointer;
 }
 
 #startScreen h1 {
-
     letter-spacing: 5px;
-
     font-size: 32px;
-
     margin-bottom: 15px;
 }
 
 #startScreen p {
-
     color: #aaa;
-
     font-size: 16px;
-
     animation: pulseText 1.5s infinite;
 }
 
 @keyframes pulseText {
-
-    50% {
-        opacity: .4;
-    }
+    50% { opacity: .4; }
 }
 
-
-/* =========================================================
-   DASHBOARD IMAGE
-   ========================================================= */
-
+/* DASHBOARD IMAGE */
 #dashboard {
-
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     transition: opacity .4s ease;
-
     z-index: 1;
 }
 
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
+/* HEADER */
 #siteHeader {
-
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 82px;
-
     display: flex;
-
     align-items: stretch;
-
     justify-content: space-between;
-
     box-sizing: border-box;
-
     z-index: 500;
-
-    font-family: Arial, sans-serif;
-
     color: #333;
-
     pointer-events: none;
 }
 
-
-/* =========================================================
-   STABILUS BRANDING
-   ========================================================= */
-
 #siteHeader .logo {
-
     height: 82px;
-
     min-width: 245px;
-
     padding: 0 28px;
-
     box-sizing: border-box;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
     background: #004A98;
-
     color: white;
-
     border-bottom-right-radius: 8px;
-
     box-shadow: 0 3px 12px rgba(0,0,0,.18);
 }
 
-
-/* STABILUS */
-
 #siteHeader .company {
-
-    font-size: 30px;
-
+    font-size: 25px;
     font-weight: 800;
-
     letter-spacing: 2.5px;
-
     line-height: 1;
 }
 
-
-/* DEPARTMENT */
-
 #siteHeader .department {
-
     margin-top: 7px;
-
-    font-size: 15px;
-
+    font-size: 10px;
     font-weight: 600;
-
     letter-spacing: 1.4px;
-
     opacity: .9;
 }
 
-
-/* =========================================================
-   TITLU CENTRAL
-   ========================================================= */
-
 #siteHeader .title {
-
     position: absolute;
-
     left: 50%;
-
     top: 50%;
-
     transform: translate(-50%, -50%);
-
     font-size: 22px;
-
     font-weight: 600;
-
     letter-spacing: 1px;
-
     white-space: nowrap;
-
     color: #333;
-
     text-shadow: 0 1px 3px rgba(255,255,255,.7);
 }
 
-
-/* =========================================================
-   STATUS / INFO DREAPTA
-   ========================================================= */
-
 #siteHeader .status {
-
     height: 82px;
-
     min-width: 290px;
-
-    padding: 8px 25px 7px 15px;
-
+    padding: 16px 25px 7px 15px;
     box-sizing: border-box;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: flex-end;
-
     justify-content: center;
-
     gap: 2px;
-
     background: rgba(255,255,255,.70);
-
     backdrop-filter: blur(5px);
-
     border-bottom-left-radius: 10px;
-
-    transform: translateY(10px);
 }
 
-
-/* =========================================================
-   LIVE
-   ========================================================= */
-
 #siteHeader .live {
-
     display: flex;
-
     align-items: center;
-
     gap: 6px;
-
     font-size: 10px;
-
     font-weight: 700;
-
     letter-spacing: 1.5px;
-
     color: #333;
 }
 
 #siteHeader .live-dot {
-
     width: 8px;
     height: 8px;
-
     background: #00c853;
-
     border-radius: 50%;
-
     animation: livePulse 1.5s infinite;
 }
 
 @keyframes livePulse {
-
-    0% {
-        box-shadow: 0 0 0 0 rgba(0,200,83,.6);
-    }
-
-    70% {
-        box-shadow: 0 0 0 8px rgba(0,200,83,0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(0,200,83,0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(0,200,83,.6); }
+    70% { box-shadow: 0 0 0 8px rgba(0,200,83,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,200,83,0); }
 }
 
-
-/* =========================================================
-   CEAS
-   ========================================================= */
-
 #headerClock {
-
     font-size: 20px;
-
     font-weight: 700;
-
     letter-spacing: 1.5px;
-
     line-height: 1.1;
-
     color: #222;
 }
 
-
-/* =========================================================
-   DATA + ZI
-   ========================================================= */
-
 #headerDate {
-
     font-size: 10px;
-
     font-weight: 600;
-
     letter-spacing: 1px;
-
     color: #444;
-
     text-transform: uppercase;
 }
 
-
-/* =========================================================
-   VREMEA
-   ========================================================= */
-
 #headerWeather {
-
     display: flex;
-
     align-items: center;
-
     gap: 6px;
-
     font-size: 10px;
-
     color: #555;
-
     margin-top: 1px;
 }
 
-#headerWeatherIcon {
-
-    font-size: 15px;
-
-    line-height: 1;
-}
-
-#headerTemperature {
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    color: #333;
-}
-
-#headerWeatherDescription {
-
-    font-size: 9px;
-
-    color: #666;
-
-    letter-spacing: .3px;
-}
-
-
-/* =========================================================
-   UPDATED
-   ========================================================= */
+#headerWeatherIcon { font-size: 15px; line-height: 1; }
+#headerTemperature { font-size: 12px; font-weight: 700; color: #333; }
+#headerWeatherDescription { font-size: 9px; color: #666; letter-spacing: .3px; }
 
 #lastRefresh {
-
     font-size: 8px;
-
     color: #777;
-
     letter-spacing: .5px;
-
     margin-top: 1px;
 }
 
-
-/* =========================================================
-   RADIO BAR
-   ========================================================= */
-
-#radioBar {
-
+/* KPI CARDS */
+#kpiBar {
     position: absolute;
+    top: 98px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 450;
+    display: flex;
+    gap: 14px;
+    pointer-events: none;
+}
 
+.kpi-card {
+    position: relative;
+    width: 205px;
+    height: 100px;
+    box-sizing: border-box;
+    padding: 13px 17px 11px 23px;
+    overflow: hidden;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.16);
+    color: #1f2937;
+}
+
+.kpi-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    background: #004A98;
+}
+
+.kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kpi-name {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #6b7280;
+}
+
+.kpi-value {
+    margin-top: 5px;
+    font-size: 32px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: #1f2937;
+}
+
+.kpi-unit {
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+    margin-left: 3px;
+}
+
+.kpi-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 9px;
+}
+
+.kpi-status {
+    font-size: 10px;
+    font-weight: 600;
+    color: #6b7280;
+    letter-spacing: .15px;
+}
+
+.led {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #9ca3af;
+    box-shadow: 0 0 0 3px rgba(156,163,175,.12);
+    transition: background .25s ease, box-shadow .25s ease;
+}
+
+.led.green {
+    background: rgb(34,197,94);
+    box-shadow: 0 0 0 3px rgba(34,197,94,.15), 0 0 12px rgba(34,197,94,.55);
+}
+
+.led.orange {
+    background: rgb(245,158,11);
+    box-shadow: 0 0 0 3px rgba(245,158,11,.15), 0 0 12px rgba(245,158,11,.55);
+}
+
+.led.red {
+    background: rgb(220,38,38);
+    box-shadow: 0 0 0 3px rgba(220,38,38,.15), 0 0 12px rgba(220,38,38,.55);
+}
+
+/* RADIO BAR */
+#radioBar {
+    position: absolute;
     left: 15px;
     bottom: 15px;
-
     z-index: 999;
-
     background: rgba(0,0,0,.45);
-
     backdrop-filter: blur(10px);
-
     border-radius: 30px;
-
     padding: 8px 10px;
-
     opacity: .70;
-
     transition: .3s;
 }
 
-#radioBar:hover {
-
-    opacity: 1;
-}
-
+#radioBar:hover { opacity: 1; }
 
 #radioBar button {
-
     background: transparent;
-
     border: none;
-
     color: white;
-
     cursor: pointer;
-
     font-size: 13px;
-
     padding: 6px 10px;
-
     border-radius: 20px;
-
     transition: .2s;
 }
 
-#radioBar button:hover {
-
-    background: rgba(255,255,255,.25);
-}
-
-
-/* RADIO ACTIV */
+#radioBar button:hover { background: rgba(255,255,255,.25); }
 
 #radioBar button.active {
-
     background: rgba(255,255,255,.35);
-
     color: #00ff66;
-
     box-shadow: 0 0 10px rgba(0,255,100,.5);
 }
 
-#radioBar button.active:hover {
+#radioBar button.active:hover { background: rgba(255,255,255,.45); }
+#audio { display: none; }
 
-    background: rgba(255,255,255,.45);
-}
-
-
-/* =========================================================
-   AUDIO
-   ========================================================= */
-
-#audio {
-
-    display: none;
-}
-
-
-/* =========================================================
-   DOWNLOAD BUTTON
-   ========================================================= */
-
+/* DOWNLOAD */
 #downloadButton {
-
     position: absolute;
-
     right: 15px;
     bottom: 15px;
-
     width: 28px;
     height: 28px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     background: rgba(0,0,0,.45);
-
     color: white;
-
     text-decoration: none;
-
     border-radius: 50%;
-
     font-size: 18px;
-
     opacity: .75;
-
     transition: .3s;
-
     z-index: 999;
 }
 
 #downloadButton:hover {
-
     opacity: 1;
-
     background: rgba(0,0,0,.7);
-
     transform: scale(1.1);
 }
 
-
-/* =========================================================
-   RESPONSIVE - ECRANE MAI MICI
-   ========================================================= */
-
+/* RESPONSIVE */
 @media (max-width: 900px) {
+    #siteHeader .logo { min-width: 200px; padding-left: 18px; padding-right: 18px; }
+    #siteHeader .company { font-size: 21px; }
+    #siteHeader .department { font-size: 8px; }
+    #siteHeader .title { font-size: 17px; }
+    #siteHeader .status { min-width: 235px; padding-right: 15px; }
 
-    #siteHeader .logo {
-
-        min-width: 200px;
-
-        padding-left: 18px;
-        padding-right: 18px;
-    }
-
-    #siteHeader .company {
-
-        font-size: 21px;
-    }
-
-    #siteHeader .department {
-
-        font-size: 8px;
-    }
-
-    #siteHeader .title {
-
-        font-size: 17px;
-    }
-
-    #siteHeader .status {
-
-        min-width: 235px;
-
-        padding-right: 15px;
-    }
-
+    #kpiBar { gap: 8px; }
+    .kpi-card { width: 175px; height: 92px; padding: 11px 13px 9px 20px; }
+    .kpi-value { font-size: 27px; }
 }
-
-
-/* =========================================================
-   RESPONSIVE - TV / FULLSCREEN
-   ========================================================= */
 
 @media (min-width: 1600px) {
+    #siteHeader { height: 90px; }
+    #siteHeader .logo { height: 90px; min-width: 280px; padding-left: 35px; }
+    #siteHeader .company { font-size: 29px; }
+    #siteHeader .department { font-size: 11px; }
+    #siteHeader .title { font-size: 25px; }
+    #siteHeader .status { height: 90px; min-width: 330px; padding: 18px 30px 8px 15px; }
+    #headerClock { font-size: 23px; }
+    #headerDate { font-size: 11px; }
+    #headerTemperature { font-size: 14px; }
 
-    #siteHeader {
-
-        height: 90px;
-    }
-
-    #siteHeader .logo {
-
-        height: 90px;
-
-        min-width: 280px;
-
-        padding-left: 35px;
-    }
-
-    #siteHeader .company {
-
-        font-size: 29px;
-    }
-
-    #siteHeader .department {
-
-        font-size: 11px;
-    }
-
-    #siteHeader .title {
-
-        font-size: 25px;
-    }
-
-#siteHeader .status {
-    height: 90px;
-    min-width: 330px;
-    padding-right: 30px;
+    #kpiBar { top: 110px; gap: 18px; }
+    .kpi-card { width: 235px; height: 112px; padding: 15px 20px 12px 26px; }
+    .kpi-name { font-size: 13px; }
+    .kpi-value { font-size: 38px; }
+    .kpi-status { font-size: 11px; }
+    .led { width: 13px; height: 13px; }
 }
-
-    #headerClock {
-
-        font-size: 23px;
-    }
-
-    #headerDate {
-
-        font-size: 11px;
-    }
-
-    #headerTemperature {
-
-        font-size: 14px;
-    }
-
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
 
 @media (max-width: 650px) {
+    #siteHeader .logo { min-width: 170px; padding-left: 14px; padding-right: 14px; }
+    #siteHeader .company { font-size: 18px; }
+    #siteHeader .department { font-size: 7px; letter-spacing: 1px; }
+    #siteHeader .title { display: none; }
+    #siteHeader .status { min-width: 190px; padding-right: 12px; }
+    #headerClock { font-size: 17px; }
+    #headerDate { font-size: 8px; }
+    #headerWeatherDescription { display: none; }
 
-    #siteHeader .logo {
-
-        min-width: 170px;
-
-        padding-left: 14px;
-        padding-right: 14px;
+    #kpiBar {
+        top: 92px;
+        width: calc(100% - 16px);
+        gap: 5px;
     }
 
-    #siteHeader .company {
-
-        font-size: 18px;
+    .kpi-card {
+        flex: 1;
+        min-width: 0;
+        height: 82px;
+        padding: 9px 8px 7px 15px;
+        border-radius: 9px;
     }
 
-    #siteHeader .department {
-
-        font-size: 7px;
-
-        letter-spacing: 1px;
-    }
-
-    #siteHeader .title {
-
-        display: none;
-    }
-
-    #siteHeader .status {
-
-        min-width: 190px;
-
-        padding-right: 12px;
-    }
-
-    #headerClock {
-
-        font-size: 17px;
-    }
-
-    #headerDate {
-
-        font-size: 8px;
-    }
-
-    #headerWeatherDescription {
-
-        display: none;
-    }
-
+    .kpi-card::before { width: 4px; }
+    .kpi-name { font-size: 9px; }
+    .kpi-value { font-size: 20px; margin-top: 4px; }
+    .kpi-unit { font-size: 9px; }
+    .kpi-bottom { margin-top: 7px; }
+    .kpi-status { font-size: 7px; }
+    .led { width: 9px; height: 9px; }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- ======================================================
-     START SCREEN
-     ====================================================== -->
-
 <div id="startScreen">
-
     <div>
-
         <h1>KPI DASHBOARD</h1>
-
         <p>Click pentru pornire</p>
-
     </div>
-
 </div>
 
-
-<!-- ======================================================
-     DASHBOARD IMAGE
-     ====================================================== -->
-
-<img
-    id="dashboard"
-    src="Slide1.PNG"
-    alt="Sample Shop KPI Dashboard"
->
-
-
-<!-- ======================================================
-     HEADER
-     ====================================================== -->
+<img id="dashboard" src="Slide1.PNG" alt="Sample Shop KPI Dashboard">
 
 <header id="siteHeader">
-
-
-    <!-- STABILUS -->
-
     <div class="logo">
-
-        <div class="company">
-            STABILUS
-        </div>
-
-        <div class="department">
-            ROSO GS-SP • SAMPLE SHOP
-        </div>
-
+        <div class="company">STABILUS</div>
+        <div class="department">ROSO GS-SP • SAMPLE SHOP</div>
     </div>
 
-
-    <!-- TITLU CENTRAL -->
-
-    <div class="title">
-        Sample Shop Dashboard
-    </div>
-
-
-    <!-- STATUS / INFO -->
+    <div class="title">Sample Shop Dashboard</div>
 
     <div class="status">
-
-
-        <!-- LIVE -->
-
-        <div class="live">
-
-            <span class="live-dot"></span>
-
-            LIVE
-
-        </div>
-
-
-        <!-- CEAS -->
-
-        <div id="headerClock">
-            --:--:--
-        </div>
-
-
-        <!-- DATA + ZI -->
-
-        <div id="headerDate">
-            -- -------- ---- • --------
-        </div>
-
-
-        <!-- VREMEA -->
+        <div class="live"><span class="live-dot"></span>LIVE</div>
+        <div id="headerClock">--:--:--</div>
+        <div id="headerDate">-- -------- ---- • --------</div>
 
         <div id="headerWeather">
-
-            <span id="headerWeatherIcon">
-                ☀️
-            </span>
-
-            <span id="headerTemperature">
-                --°C
-            </span>
-
-            <span id="headerWeatherDescription">
-                Se încarcă...
-            </span>
-
+            <span id="headerWeatherIcon">☀️</span>
+            <span id="headerTemperature">--°C</span>
+            <span id="headerWeatherDescription">Se încarcă...</span>
         </div>
 
-
-        <!-- LAST REFRESH -->
-
-        <div id="lastRefresh">
-            Updated --
-        </div>
-
-
+        <div id="lastRefresh">Updated --:--</div>
     </div>
-
 </header>
 
+<!-- KPI CARDS -->
+<section id="kpiBar">
+    <div class="kpi-card" id="otdCard">
+        <div class="kpi-top">
+            <div class="kpi-name">OTD</div>
+            <div class="led" id="otdLed"></div>
+        </div>
+        <div class="kpi-value"><span id="otdValue">--</span><span class="kpi-unit">%</span></div>
+        <div class="kpi-bottom"><span class="kpi-status" id="otdStatus">Waiting for data</span></div>
+    </div>
 
-<!-- ======================================================
-     RADIO
-     ====================================================== -->
+    <div class="kpi-card" id="ltCard">
+        <div class="kpi-top">
+            <div class="kpi-name">LT</div>
+            <div class="led" id="ltLed"></div>
+        </div>
+        <div class="kpi-value"><span id="ltValue">--</span><span class="kpi-unit">Days</span></div>
+        <div class="kpi-bottom"><span class="kpi-status" id="ltStatus">Waiting for data</span></div>
+    </div>
+
+    <div class="kpi-card" id="oteCard">
+        <div class="kpi-top">
+            <div class="kpi-name">OTE</div>
+            <div class="led" id="oteLed"></div>
+        </div>
+        <div class="kpi-value"><span id="oteValue">--</span><span class="kpi-unit">%</span></div>
+        <div class="kpi-bottom"><span class="kpi-status" id="oteStatus">Waiting for data</span></div>
+    </div>
+</section>
 
 <div id="radioBar">
-
-
-    <button
-        onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)"
-    >
-        KISS
-    </button>
-
-
-    <button
-        onclick="playRadio('https://stream.rcast.net/68949', this)"
-    >
-        ZU
-    </button>
-
-
-    <button
-        onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)"
-    >
-        MAGIC
-    </button>
-
-
-    <button
-        onclick="playRadio('https://live.superfm.ro/stream.mp3', this)"
-    >
-        SUPER FM
-    </button>
-
-
-    <button
-        onclick="playRadio('https://live.radio-impuls.ro/stream', this)"
-    >
-        IMPULS
-    </button>
-
-
+    <button onclick="playRadio('https://live.kissfm.ro/kissfm.aacp', this)">KISS</button>
+    <button onclick="playRadio('https://stream.rcast.net/68949', this)">ZU</button>
+    <button onclick="playRadio('https://live.magicfm.ro/magicfm.aacp', this)">MAGIC</button>
+    <button onclick="playRadio('https://live.superfm.ro/stream.mp3', this)">SUPER FM</button>
+    <button onclick="playRadio('https://live.radio-impuls.ro/stream', this)">IMPULS</button>
 </div>
 
-
-<!-- ======================================================
-     DOWNLOAD
-     ====================================================== -->
-
-<a
-    href="Slide1.PNG"
-    download="Slide1.PNG"
-    id="downloadButton"
-    title="Descarcă dashboard"
->
-    ↓
-</a>
-
-
-<!-- ======================================================
-     AUDIO PLAYER
-     ====================================================== -->
-
-<audio
-    id="audio"
-    controls
-></audio>
-
+<a href="Slide1.PNG" download="Slide1.PNG" id="downloadButton" title="Descarcă dashboard">↓</a>
+<audio id="audio" controls></audio>
 
 <script>
-
-
 /* =========================================================
    REFRESH DASHBOARD IMAGE
    ========================================================= */
-
 function refreshImage() {
-
-    const dashboard =
-        document.getElementById("dashboard");
-
-
+    const dashboard = document.getElementById("dashboard");
     dashboard.style.opacity = "0.3";
 
-
     setTimeout(function() {
-
-        dashboard.src =
-            "Slide1.PNG?t=" +
-            new Date().getTime();
-
+        dashboard.src = "Slide1.PNG?t=" + new Date().getTime();
         dashboard.style.opacity = "1";
-
     }, 300);
-
 }
-
-
-/* Refresh la fiecare 90 secunde */
 
 setInterval(refreshImage, 90000);
 
+/* =========================================================
+   KPI JSON + VBA LOGIC
+   JSON expected example:
+   {
+      "lastUpdate":"2026-09-10 13:35",
+      "kpi":{"otd":92.6,"ote":88.4,"lt":11.8}
+   }
+   OTD / OTE are expected as 0-100 values, not 0-1.
+   ========================================================= */
+function setLed(id, statusClass) {
+    const led = document.getElementById(id);
+    led.className = "led " + statusClass;
+}
 
+function updateKPIStatus(otd, ote, lt) {
+    // OTD - VBA logic
+    if (otd >= 85) {
+        setLed("otdLed", "green");
+        document.getElementById("otdStatus").textContent = "Target: 85%";
+    } else if (otd >= 80) {
+        setLed("otdLed", "orange");
+        document.getElementById("otdStatus").textContent = "Warning Zone";
+    } else {
+        setLed("otdLed", "red");
+        document.getElementById("otdStatus").textContent = "Below Target";
+    }
+
+    // OTE - VBA logic
+    if (ote >= 90) {
+        setLed("oteLed", "green");
+        document.getElementById("oteStatus").textContent = "Target: 90%";
+    } else if (ote >= 85) {
+        setLed("oteLed", "orange");
+        document.getElementById("oteStatus").textContent = "Warning Zone";
+    } else {
+        setLed("oteLed", "red");
+        document.getElementById("oteStatus").textContent = "Below Target";
+    }
+
+    // LT - VBA logic
+    if (lt <= 14) {
+        setLed("ltLed", "green");
+        document.getElementById("ltStatus").textContent = "Target: 14";
+    } else if (lt <= 15) {
+        setLed("ltLed", "orange");
+        document.getElementById("ltStatus").textContent = "Warning Zone";
+    } else {
+        setLed("ltLed", "red");
+        document.getElementById("ltStatus").textContent = "Above Target";
+    }
+}
+
+function getRefreshTime(lastUpdate) {
+    if (!lastUpdate) return "--:--";
+
+    // Accepts e.g. "2026-09-10 13:35" or "10.09.2026 13:35"
+    const match = String(lastUpdate).match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
+    return match ? match[0] : String(lastUpdate);
+}
+
+async function loadDashboardKPI() {
+    try {
+        const response = await fetch("data/dashboard.json?t=" + Date.now(), {
+            cache: "no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+
+        const otd = Number(data.kpi.otd);
+        const ote = Number(data.kpi.ote);
+        const lt = Number(data.kpi.lt);
+
+        if (![otd, ote, lt].every(Number.isFinite)) {
+            throw new Error("Invalid KPI values in dashboard.json");
+        }
+
+        document.getElementById("otdValue").textContent = otd.toFixed(1);
+        document.getElementById("oteValue").textContent = ote.toFixed(1);
+        document.getElementById("ltValue").textContent = lt.toFixed(1);
+
+        updateKPIStatus(otd, ote, lt);
+
+        document.getElementById("lastRefresh").textContent =
+            "Updated " + getRefreshTime(data.lastUpdate);
+    }
+    catch (error) {
+        console.error("Dashboard JSON error:", error);
+
+        document.getElementById("otdValue").textContent = "--";
+        document.getElementById("oteValue").textContent = "--";
+        document.getElementById("ltValue").textContent = "--";
+
+        document.getElementById("otdStatus").textContent = "Data unavailable";
+        document.getElementById("oteStatus").textContent = "Data unavailable";
+        document.getElementById("ltStatus").textContent = "Data unavailable";
+
+        setLed("otdLed", "red");
+        setLed("oteLed", "red");
+        setLed("ltLed", "red");
+
+        document.getElementById("lastRefresh").textContent = "Updated ERROR";
+    }
+}
+
+loadDashboardKPI();
+setInterval(loadDashboardKPI, 30000);
 
 /* =========================================================
    RADIO
    ========================================================= */
-
-const audio =
-    document.getElementById("audio");
-
+const audio = document.getElementById("audio");
 
 function playRadio(url, button) {
-
-
     audio.pause();
-
-
     audio.src = url;
-
-
     audio.load();
 
-
     audio.play().catch(function(error) {
-
         console.log("Radio playback:", error);
-
     });
 
+    document.querySelectorAll("#radioBar button").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
 
-    /*
-       Scoate active de pe toate butoanele
-    */
-
-    document
-        .querySelectorAll("#radioBar button")
-        .forEach(function(btn) {
-
-            btn.classList.remove("active");
-
-        });
-
-
-    /*
-       Marchează radioul selectat
-    */
-
-    if (button) {
-
-        button.classList.add("active");
-
-    }
-
+    if (button) button.classList.add("active");
 }
-
-
 
 /* =========================================================
    CURSOR
    ========================================================= */
-
 let cursorTimer;
 
-
 function hideCursor() {
-
     document.body.style.cursor = "none";
-
 }
-
 
 function showCursor() {
-
     document.body.style.cursor = "auto";
-
     clearTimeout(cursorTimer);
-
-    cursorTimer =
-        setTimeout(hideCursor, 3000);
-
+    cursorTimer = setTimeout(hideCursor, 3000);
 }
 
-
 showCursor();
-
-
-document.addEventListener(
-    "mousemove",
-    showCursor
-);
-
-
+document.addEventListener("mousemove", showCursor);
 
 /* =========================================================
    DATA + ORA
    ========================================================= */
-
 function updateDateTime() {
-
-
     const now = new Date();
 
-
-    /* -------------------------
-       ORA
-       ------------------------- */
-
-    const time =
-        now.toLocaleTimeString(
-            "ro-RO",
-            {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit"
-            }
-        );
-
-
-    /* -------------------------
-       LUNI
-       ------------------------- */
+    const time = now.toLocaleTimeString("ro-RO", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
 
     const months = [
-
-        "IANUARIE",
-        "FEBRUARIE",
-        "MARTIE",
-        "APRILIE",
-        "MAI",
-        "IUNIE",
-        "IULIE",
-        "AUGUST",
-        "SEPTEMBRIE",
-        "OCTOMBRIE",
-        "NOIEMBRIE",
-        "DECEMBRIE"
-
+        "IANUARIE", "FEBRUARIE", "MARTIE", "APRILIE", "MAI", "IUNIE",
+        "IULIE", "AUGUST", "SEPTEMBRIE", "OCTOMBRIE", "NOIEMBRIE", "DECEMBRIE"
     ];
-
-
-    /* -------------------------
-       ZILE
-       ------------------------- */
 
     const days = [
-
-        "DUMINICĂ",
-        "LUNI",
-        "MARȚI",
-        "MIERCURI",
-        "JOI",
-        "VINERI",
-        "SÂMBĂTĂ"
-
+        "DUMINICĂ", "LUNI", "MARȚI", "MIERCURI", "JOI", "VINERI", "SÂMBĂTĂ"
     ];
 
-
-    /* -------------------------
-       DATA
-       ------------------------- */
-
     const dateText =
-
-        now.getDate() +
-        " " +
-        months[now.getMonth()] +
-        " " +
-        now.getFullYear() +
-        " • " +
+        now.getDate() + " " +
+        months[now.getMonth()] + " " +
+        now.getFullYear() + " • " +
         days[now.getDay()];
 
-
-    /* -------------------------
-       UPDATE HTML
-       ------------------------- */
-
-    document
-        .getElementById("headerClock")
-        .textContent = time;
-
-
-    document
-        .getElementById("headerDate")
-        .textContent = dateText;
-
-
-    /*
-       Updated = ora ultimei actualizări
-    */
-
-    document
-        .getElementById("lastRefresh")
-        .textContent =
-            "Updated " +
-            time.substring(0, 5);
-
+    document.getElementById("headerClock").textContent = time;
+    document.getElementById("headerDate").textContent = dateText;
 }
 
-
-/* Prima actualizare */
-
 updateDateTime();
-
-
-/* Actualizare fiecare secundă */
-
-setInterval(
-    updateDateTime,
-    1000
-);
-
-
+setInterval(updateDateTime, 1000);
 
 /* =========================================================
    VREMEA - BRAȘOV
    ========================================================= */
-
 async function updateWeather() {
-
-
     try {
-
-
         const latitude = 45.6579;
-
         const longitude = 25.6012;
 
-
         const url =
-
             "https://api.open-meteo.com/v1/forecast" +
-
-            "?latitude=" +
-            latitude +
-
-            "&longitude=" +
-            longitude +
-
+            "?latitude=" + latitude +
+            "&longitude=" + longitude +
             "&current=temperature_2m,weather_code,is_day" +
-
             "&timezone=Europe%2FBucharest";
 
+        const response = await fetch(url);
+        const data = await response.json();
 
-        const response =
-            await fetch(url);
-
-
-        const data =
-            await response.json();
-
-
-        const temperature =
-            Math.round(
-                data.current.temperature_2m
-            );
-
-
-        const weatherCode =
-            data.current.weather_code;
-
-
-        const isDay =
-            data.current.is_day;
-
+        const temperature = Math.round(data.current.temperature_2m);
+        const weatherCode = data.current.weather_code;
+        const isDay = data.current.is_day;
 
         let icon = "☀️";
-
         let description = "Senin";
 
-
-        /* =================================================
-           CODURI METEO WMO
-           ================================================= */
-
-
         if (weatherCode === 0) {
-
-
-            icon =
-                isDay
-                    ? "☀️"
-                    : "🌙";
-
-
-            description =
-                "Senin";
-
-
+            icon = isDay ? "☀️" : "🌙";
+            description = "Senin";
+        } else if (weatherCode === 1 || weatherCode === 2) {
+            icon = isDay ? "🌤️" : "☁️";
+            description = "Parțial noros";
+        } else if (weatherCode === 3) {
+            icon = "☁️";
+            description = "Înnorat";
+        } else if (weatherCode === 45 || weatherCode === 48) {
+            icon = "🌫️";
+            description = "Ceață";
+        } else if (weatherCode >= 51 && weatherCode <= 57) {
+            icon = "🌦️";
+            description = "Burniță";
+        } else if (weatherCode >= 61 && weatherCode <= 67) {
+            icon = "🌧️";
+            description = "Ploaie";
+        } else if (weatherCode >= 71 && weatherCode <= 77) {
+            icon = "❄️";
+            description = "Ninsoare";
+        } else if (weatherCode >= 80 && weatherCode <= 82) {
+            icon = "🌦️";
+            description = "Averse";
+        } else if (weatherCode >= 95) {
+            icon = "⛈️";
+            description = "Furtună";
         }
 
-
-        else if (
-            weatherCode === 1 ||
-            weatherCode === 2
-        ) {
-
-
-            icon =
-                isDay
-                    ? "🌤️"
-                    : "☁️";
-
-
-            description =
-                "Parțial noros";
-
-
-        }
-
-
-        else if (weatherCode === 3) {
-
-
-            icon =
-                "☁️";
-
-
-            description =
-                "Înnorat";
-
-
-        }
-
-
-        else if (
-            weatherCode === 45 ||
-            weatherCode === 48
-        ) {
-
-
-            icon =
-                "🌫️";
-
-
-            description =
-                "Ceață";
-
-
-        }
-
-
-        else if (
-            weatherCode >= 51 &&
-            weatherCode <= 57
-        ) {
-
-
-            icon =
-                "🌦️";
-
-
-            description =
-                "Burniță";
-
-
-        }
-
-
-        else if (
-            weatherCode >= 61 &&
-            weatherCode <= 67
-        ) {
-
-
-            icon =
-                "🌧️";
-
-
-            description =
-                "Ploaie";
-
-
-        }
-
-
-        else if (
-            weatherCode >= 71 &&
-            weatherCode <= 77
-        ) {
-
-
-            icon =
-                "❄️";
-
-
-            description =
-                "Ninsoare";
-
-
-        }
-
-
-        else if (
-            weatherCode >= 80 &&
-            weatherCode <= 82
-        ) {
-
-
-            icon =
-                "🌦️";
-
-
-            description =
-                "Averse";
-
-
-        }
-
-
-        else if (
-            weatherCode >= 95
-        ) {
-
-
-            icon =
-                "⛈️";
-
-
-            description =
-                "Furtună";
-
-
-        }
-
-
-        /* =================================================
-           UPDATE HTML
-           ================================================= */
-
-
-        document
-            .getElementById("headerWeatherIcon")
-            .textContent = icon;
-
-
-        document
-            .getElementById("headerTemperature")
-            .textContent =
-                temperature + "°C";
-
-
-        document
-            .getElementById("headerWeatherDescription")
-            .textContent =
-                description;
-
-
+        document.getElementById("headerWeatherIcon").textContent = icon;
+        document.getElementById("headerTemperature").textContent = temperature + "°C";
+        document.getElementById("headerWeatherDescription").textContent = description;
     }
-
-
     catch (error) {
-
-
-        console.log(
-            "Eroare vreme:",
-            error
-        );
-
-
-        document
-            .getElementById(
-                "headerWeatherDescription"
-            )
-            .textContent =
-                "Date indisponibile";
-
-
+        console.log("Eroare vreme:", error);
+        document.getElementById("headerWeatherDescription").textContent = "Date indisponibile";
     }
-
 }
 
-
-/* Prima actualizare */
-
 updateWeather();
-
-
-/* Actualizare vreme la fiecare 10 minute */
-
-setInterval(
-    updateWeather,
-    600000
-);
-
-
+setInterval(updateWeather, 600000);
 
 /* =========================================================
    START SCREEN
    ========================================================= */
+document.getElementById("startScreen").addEventListener("click", function() {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(function(error) {
+            console.log("Fullscreen:", error);
+        });
+    }
 
-document
-    .getElementById("startScreen")
-    .addEventListener(
-        "click",
-        function() {
+    this.style.display = "none";
 
-
-            /*
-               Fullscreen
-            */
-
-            if (
-                document.documentElement.requestFullscreen
-            ) {
-
-                document
-                    .documentElement
-                    .requestFullscreen()
-                    .catch(function(error) {
-
-                        console.log(
-                            "Fullscreen:",
-                            error
-                        );
-
-                    });
-
-            }
-
-
-            /*
-               Ascunde start screen
-            */
-
-            this.style.display =
-                "none";
-
-
-            /*
-               KISS FM implicit
-            */
-
-            const kissButton =
-                document.querySelector(
-                    "#radioBar button"
-                );
-
-
-            playRadio(
-
-                "https://live.kissfm.ro/kissfm.aacp",
-
-                kissButton
-
-            );
-
-        }
-    );
-
+    const kissButton = document.querySelector("#radioBar button");
+    playRadio("https://live.kissfm.ro/kissfm.aacp", kissButton);
+});
 </script>
-
 
 </body>
 </html>
