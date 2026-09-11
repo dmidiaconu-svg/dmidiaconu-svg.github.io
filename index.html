@@ -1337,44 +1337,7 @@ function drawComboChart(canvasId, cfg) {
     });
 
 
-    /* LABEL ONLY SERIES */
-
-    (cfg.labels || []).forEach(series => {
-
-        series.values.forEach((value, i) => {
-
-            if (!Number.isFinite(value)) return;
-
-
-            const baseY =
-                Number.isFinite(series.anchorValues?.[i])
-                    ? Y(series.anchorValues[i]) - 8
-                    : Y(cfg.min) - 18;
-
-
-            ctx.font =
-                series.font || "bold 10px Arial";
-
-            ctx.fillStyle =
-                series.color || "#344054";
-
-            ctx.textAlign = "center";
-            ctx.textBaseline = "bottom";
-
-            ctx.fillText(
-                series.format
-                    ? series.format(value)
-                    : String(value),
-                X(i),
-                Math.max(
-                    margin.top + 10,
-                    baseY
-                )
-            );
-        });
-    });
-
-
+   
     /* TARGET */
 
     if (Number.isFinite(cfg.target)) {
@@ -1456,6 +1419,60 @@ function drawComboChart(canvasId, cfg) {
             ctx.fillStyle = series.color;
 
             ctx.fill();
+        });
+    });
+
+ /* LABEL ONLY SERIES */
+
+    (cfg.labels || []).forEach(series => {
+
+        series.values.forEach((value, i) => {
+
+            if (!Number.isFinite(value)) return;
+
+
+            const baseY =
+                Number.isFinite(series.anchorValues?.[i])
+                    ? Y(series.anchorValues[i]) - 8
+                    : Y(cfg.min) - 18;
+
+
+            ctx.font =
+                series.font || "bold 10px Arial";
+
+            ctx.fillStyle =
+                series.color || "#344054";
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
+
+const labelText =
+    series.format
+        ? series.format(value)
+        : String(value);
+
+const labelX = X(i);
+const labelY = Math.max(
+    margin.top + 10,
+    baseY
+);
+
+ctx.lineWidth = 3;
+ctx.strokeStyle = "rgba(255,255,255,.95)";
+ctx.strokeText(
+    labelText,
+    labelX,
+    labelY
+);
+
+ctx.fillStyle =
+    series.color || "#344054";
+
+ctx.fillText(
+    labelText,
+    labelX,
+    labelY
+);
         });
     });
 
