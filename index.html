@@ -506,6 +506,49 @@ html, body {
 
 
 /* =========================================================
+   KPI TREND
+   ========================================================= */
+
+.kpi-value-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 7px;
+}
+
+.kpi-value-row .kpi-value {
+    margin-top: 0;
+}
+
+.kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.kpi-trend .trend-arrow {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.kpi-trend.positive {
+    color: rgb(34, 197, 94);
+}
+
+.kpi-trend.negative {
+    color: rgb(220, 38, 38);
+}
+
+.kpi-trend.neutral {
+    color: #667085;
+}
+
+
+/* =========================================================
    KPI LED - STRONG GLOW
    ========================================================= */
 
@@ -755,6 +798,8 @@ html, body {
     .kpi-name { font-size: 13px; }
     .kpi-value { font-size: 38px; }
     .kpi-status { font-size: 11px; }
+    .kpi-trend { font-size: 13px; gap: 3px; }
+    .kpi-trend .trend-arrow { font-size: 16px; }
     .led { width: 13px; height: 13px; }
 }
 
@@ -788,6 +833,8 @@ html, body {
     .kpi-unit { font-size: 9px; }
     .kpi-bottom { margin-top: 7px; }
     .kpi-status { font-size: 7px; }
+    .kpi-trend { font-size: 8px; gap: 2px; }
+    .kpi-trend .trend-arrow { font-size: 10px; }
     .led { width: 9px; height: 9px; }
 }
 </style>
@@ -834,7 +881,7 @@ html, body {
             <div class="kpi-name">OTD</div>
             <div class="led" id="otdLed"></div>
         </div>
-        <div class="kpi-value"><span id="otdValue">--</span><span class="kpi-unit">%</span></div>
+        <div class="kpi-value-row"><div class="kpi-value"><span id="otdValue">--</span><span class="kpi-unit">%</span></div><div class="kpi-trend neutral" id="otdTrend"><span class="trend-arrow">•</span><span class="trend-value">--</span></div></div>
         <div class="kpi-bottom"><span class="kpi-status" id="otdStatus">Waiting for data</span></div>
     </div>
 
@@ -843,7 +890,7 @@ html, body {
             <div class="kpi-name">LT</div>
             <div class="led" id="ltLed"></div>
         </div>
-        <div class="kpi-value"><span id="ltValue">--</span><span class="kpi-unit">Days</span></div>
+        <div class="kpi-value-row"><div class="kpi-value"><span id="ltValue">--</span><span class="kpi-unit">Days</span></div><div class="kpi-trend neutral" id="ltTrend"><span class="trend-arrow">•</span><span class="trend-value">--</span></div></div>
         <div class="kpi-bottom"><span class="kpi-status" id="ltStatus">Waiting for data</span></div>
     </div>
 
@@ -852,7 +899,7 @@ html, body {
             <div class="kpi-name">OTE</div>
             <div class="led" id="oteLed"></div>
         </div>
-        <div class="kpi-value"><span id="oteValue">--</span><span class="kpi-unit">%</span></div>
+        <div class="kpi-value-row"><div class="kpi-value"><span id="oteValue">--</span><span class="kpi-unit">%</span></div><div class="kpi-trend neutral" id="oteTrend"><span class="trend-arrow">•</span><span class="trend-value">--</span></div></div>
         <div class="kpi-bottom"><span class="kpi-status" id="oteStatus">Waiting for data</span></div>
     </div>
 </section>
@@ -936,6 +983,44 @@ function updateKPIStatus(otd, ote, lt) {
     }
 }
 
+
+function updateTrend(id, currentValue, oldValue, inverse = false) {
+    const trend = document.getElementById(id);
+
+    if (!trend || !Number.isFinite(currentValue) || !Number.isFinite(oldValue)) {
+        return;
+    }
+
+    const difference = currentValue - oldValue;
+
+    trend.classList.remove("positive", "negative", "neutral");
+
+    const arrow = trend.querySelector(".trend-arrow");
+    const value = trend.querySelector(".trend-value");
+
+    // Fara schimbare
+    if (Math.abs(difference) < 0.05) {
+        trend.classList.add("neutral");
+        arrow.textContent = "•";
+        value.textContent = "0.0";
+        return;
+    }
+
+    // OTD / OTE: cresterea este buna.
+    // LT: scaderea este buna, deci folosim inverse = true.
+    const isPositive = inverse ? difference < 0 : difference > 0;
+
+    if (isPositive) {
+        trend.classList.add("positive");
+        arrow.textContent = "▲";
+    } else {
+        trend.classList.add("negative");
+        arrow.textContent = "▼";
+    }
+
+    value.textContent = Math.abs(difference).toFixed(1);
+}
+
 function getRefreshTime(lastUpdate) {
     if (!lastUpdate) return "--:--";
 
@@ -960,6 +1045,10 @@ async function loadDashboardKPI() {
         const ote = Number(data.kpi.ote);
         const lt = Number(data.kpi.lt);
 
+        const oldOtd = Number(data.old?.otd);
+        const oldOte = Number(data.old?.ote);
+        const oldLt = Number(data.old?.lt);
+
         if (![otd, ote, lt].every(Number.isFinite)) {
             throw new Error("Invalid KPI values in dashboard.json");
         }
@@ -969,6 +1058,10 @@ async function loadDashboardKPI() {
         document.getElementById("ltValue").textContent = lt.toFixed(1);
 
         updateKPIStatus(otd, ote, lt);
+
+        updateTrend("otdTrend", otd, oldOtd);
+        updateTrend("oteTrend", ote, oldOte);
+        updateTrend("ltTrend", lt, oldLt, true);
 
         document.getElementById("lastRefresh").textContent =
             "Updated " + getRefreshTime(data.lastUpdate);
@@ -983,6 +1076,15 @@ async function loadDashboardKPI() {
         document.getElementById("otdStatus").textContent = "Data unavailable";
         document.getElementById("oteStatus").textContent = "Data unavailable";
         document.getElementById("ltStatus").textContent = "Data unavailable";
+
+        ["otdTrend", "oteTrend", "ltTrend"].forEach(function(id) {
+            const trend = document.getElementById(id);
+            if (trend) {
+                trend.className = "kpi-trend neutral";
+                trend.querySelector(".trend-arrow").textContent = "•";
+                trend.querySelector(".trend-value").textContent = "--";
+            }
+        });
 
         setLed("otdLed", "red");
         setLed("oteLed", "red");
