@@ -382,25 +382,42 @@ html, body {
 
 #kpiBar {
     position: absolute;
+
     top: 112px;
     left: 50%;
+
     transform: translateX(-50%);
+
     z-index: 450;
+
     display: flex;
-    gap: 26px;
+
+    gap: 55px;
+
     pointer-events: none;
 }
 
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
 .kpi-card {
     position: relative;
+
     width: 320px;
-    height: 150px;
+    height: 118px;
+
     box-sizing: border-box;
-    padding: 14px 24px 12px 24px;
+
+    padding: 14px 22px 12px 24px;
+
     overflow: hidden;
 
     background: rgba(247, 249, 252, .96);
+
     border-radius: 20px;
+
     border: 1px solid rgba(120, 120, 120, .25);
 
     box-shadow:
@@ -410,263 +427,335 @@ html, body {
     color: #000;
 }
 
+
+/* Bara albastră din stânga */
+
 .kpi-card::before {
     content: "";
     position: absolute;
+
     left: 0;
-    top: 16px;
+    top: 18px;
+
     width: 4px;
-    height: 118px;
+    height: 88px;
+
     background: #0057a8;
 }
 
+
+/* =========================================================
+   TITLU KPI
+   ========================================================= */
+
 .kpi-top {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 }
 
 .kpi-name {
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
     color: #667085;
 }
 
-.kpi-value-row {
-    display: block;
-    margin-top: 4px;
-}
+
+/* =========================================================
+   VALOARE KPI
+   ========================================================= */
 
 .kpi-value {
-    margin-top: 0;
-    font-size: 43px;
-    line-height: .95;
+    margin-top: 7px;
+
+    font-size: 44px;
+    line-height: .9;
+
     font-weight: 700;
     letter-spacing: -1px;
+
     color: #000;
 }
 
 .kpi-unit {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     margin-left: 2px;
 }
 
+
+/* =========================================================
+   STATUS TEXT
+   ========================================================= */
+
 .kpi-bottom {
     display: flex;
+
     align-items: center;
-    margin-top: 6px;
+
+    margin-top: 7px;
 }
 
 .kpi-status {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     color: #000;
 }
 
-/* KPI LED */
+
+/* =========================================================
+   KPI TREND
+   ========================================================= */
+
+.kpi-value-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 7px;
+    padding-right: 58px;
+}
+
+.kpi-value-row .kpi-value {
+    margin-top: 0;
+}
+
+.kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    transform: translateY(1px);
+}
+
+.trend-bolt {
+    width: 20px;
+    height: 28px;
+    flex: 0 0 auto;
+    overflow: visible;
+}
+
+.trend-bolt path {
+    fill: currentColor;
+    fill-opacity: .12;
+    stroke-width: 2.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.kpi-trend.positive {
+    color: rgb(34, 197, 94);
+}
+
+.kpi-trend.positive .trend-bolt path {
+    stroke: rgb(34, 197, 94);
+    filter:
+        drop-shadow(0 0 2px rgba(34,197,94,1))
+        drop-shadow(0 0 5px rgba(34,197,94,1))
+        drop-shadow(0 0 9px rgba(34,197,94,.9));
+}
+
+.kpi-trend.negative {
+    color: rgb(220, 38, 38);
+}
+
+.kpi-trend.negative .trend-bolt path {
+    stroke: rgb(220, 38, 38);
+    filter:
+        drop-shadow(0 0 2px rgba(220,38,38,1))
+        drop-shadow(0 0 5px rgba(220,38,38,1))
+        drop-shadow(0 0 9px rgba(220,38,38,.9));
+}
+
+.kpi-trend.neutral {
+    color: #667085;
+}
+
+.kpi-trend.neutral .trend-bolt path {
+    stroke: #98a2b3;
+    filter: none;
+}
+
+.trend-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.trend-delta {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.trend-previous {
+    font-size: 6.5px;
+    font-weight: 500;
+    color: #7b8494;
+    letter-spacing: 0;
+}
+
+
+/* =========================================================
+   KPI LED - STRONG GLOW
+   ========================================================= */
+
 .led {
     position: absolute;
-    right: 22px;
-    top: 18px;
 
-    width: 44px;
-    height: 44px;
+    right: 26px;
+    top: 22px;
+
+    width: 54px;
+    height: 54px;
 
     border-radius: 50%;
+
     border: 1px solid rgba(30, 41, 59, .45);
+
     z-index: 2;
 
     animation: ledPulse 1.6s ease-in-out infinite;
 }
 
+
+/* HALO EXTERIOR */
+
 .led::after {
     content: "";
+
     position: absolute;
+
     left: 50%;
     top: 50%;
+
     width: 100%;
     height: 100%;
+
     border-radius: 50%;
+
     transform: translate(-50%, -50%) scale(1);
+
     z-index: -1;
+
     animation: haloPulse 1.6s ease-out infinite;
 }
 
+
+/* =========================================================
+   VERDE
+   ========================================================= */
+
 .led.green {
     background: rgb(34, 197, 94);
+
     box-shadow:
         0 0 8px rgba(34,197,94,1),
         0 0 18px rgba(34,197,94,.95),
         0 0 35px rgba(34,197,94,.75),
         0 0 55px rgba(34,197,94,.45);
 }
-.led.green::after { background: rgba(34,197,94,.55); }
+
+.led.green::after {
+    background: rgba(34,197,94,.55);
+}
+
+
+/* =========================================================
+   PORTOCALIU
+   ========================================================= */
 
 .led.orange {
     background: rgb(245, 158, 11);
+
     box-shadow:
         0 0 8px rgba(245,158,11,1),
         0 0 18px rgba(245,158,11,.95),
         0 0 35px rgba(245,158,11,.75),
         0 0 55px rgba(245,158,11,.45);
 }
-.led.orange::after { background: rgba(245,158,11,.55); }
+
+.led.orange::after {
+    background: rgba(245,158,11,.55);
+}
+
+
+/* =========================================================
+   ROSU
+   ========================================================= */
 
 .led.red {
     background: rgb(220, 38, 38);
+
     box-shadow:
         0 0 8px rgba(220,38,38,1),
         0 0 18px rgba(220,38,38,.95),
         0 0 35px rgba(220,38,38,.75),
         0 0 55px rgba(220,38,38,.45);
 }
-.led.red::after { background: rgba(220,38,38,.55); }
 
-/* Crypto-style trend block */
-.kpi-trend {
-    margin-top: 6px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
+.led.red::after {
+    background: rgba(220,38,38,.55);
 }
 
-.trend-bolt {
-    width: 24px;
-    height: 34px;
-    flex: 0 0 auto;
-    overflow: visible;
-}
 
-.trend-bolt path {
-    fill: none;
-    stroke-width: 2.3;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-}
-
-.trend-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-}
-
-.trend-delta {
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.trend-previous {
-    margin-top: 2px;
-    font-size: 8px;
-    font-weight: 500;
-    color: #7b8494;
-    line-height: 1;
-}
-
-.kpi-trend.positive { color: rgb(34, 197, 94); }
-.kpi-trend.positive .trend-bolt path {
-    stroke: rgb(34, 197, 94);
-    filter:
-        drop-shadow(0 0 2px rgba(34,197,94,1))
-        drop-shadow(0 0 6px rgba(34,197,94,.95))
-        drop-shadow(0 0 10px rgba(34,197,94,.75));
-}
-
-.kpi-trend.negative { color: rgb(220, 38, 38); }
-.kpi-trend.negative .trend-bolt path {
-    stroke: rgb(220, 38, 38);
-    filter:
-        drop-shadow(0 0 2px rgba(220,38,38,1))
-        drop-shadow(0 0 6px rgba(220,38,38,.95))
-        drop-shadow(0 0 10px rgba(220,38,38,.75));
-}
-
-.kpi-trend.neutral { color: #667085; }
-.kpi-trend.neutral .trend-bolt path {
-    stroke: #98a2b3;
-    filter: none;
-}
+/* =========================================================
+   BULINA RESPIRA
+   ========================================================= */
 
 @keyframes ledPulse {
+
     0%, 100% {
         transform: scale(1);
         filter: brightness(1);
     }
+
     50% {
         transform: scale(1.10);
         filter: brightness(1.55);
     }
 }
 
+
+/* =========================================================
+   HALO SE EXTINDE
+   ========================================================= */
+
 @keyframes haloPulse {
+
     0% {
-        transform: translate(-50%, -50%) scale(1);
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+
         opacity: .65;
+
         filter: blur(3px);
     }
+
     70% {
-        transform: translate(-50%, -50%) scale(1.8);
+        transform:
+            translate(-50%, -50%)
+            scale(1.8);
+
         opacity: .15;
+
         filter: blur(9px);
     }
+
     100% {
-        transform: translate(-50%, -50%) scale(2);
+        transform:
+            translate(-50%, -50%)
+            scale(2);
+
         opacity: 0;
+
         filter: blur(12px);
     }
 }
-
-@media (min-width: 1600px) {
-    #kpiBar { top: 110px; gap: 24px; }
-    .kpi-card { width: 300px; height: 145px; }
-    .kpi-value { font-size: 41px; }
-    .kpi-status { font-size: 14px; }
-    .trend-delta { font-size: 17px; }
-    .trend-previous { font-size: 8px; }
-    .led { width: 42px; height: 42px; }
-}
-
-@media (max-width: 900px) {
-    #kpiBar { gap: 8px; }
-    .kpi-card { width: 185px; height: 112px; padding: 10px 12px 8px 18px; }
-    .kpi-value { font-size: 28px; }
-    .kpi-unit { font-size: 11px; }
-    .kpi-status { font-size: 9px; }
-    .trend-bolt { width: 16px; height: 22px; }
-    .trend-delta { font-size: 12px; }
-    .trend-previous { font-size: 6px; }
-    .led { width: 24px; height: 24px; right: 12px; top: 12px; }
-}
-
-@media (max-width: 650px) {
-    #kpiBar {
-        top: 92px;
-        width: calc(100% - 16px);
-        gap: 5px;
-    }
-
-    .kpi-card {
-        flex: 1;
-        min-width: 0;
-        height: 90px;
-        padding: 8px 7px 6px 13px;
-        border-radius: 9px;
-    }
-
-    .kpi-card::before { width: 4px; top: 10px; height: 70px; }
-    .kpi-name { font-size: 9px; }
-    .kpi-value { font-size: 20px; }
-    .kpi-unit { font-size: 8px; }
-    .kpi-status { font-size: 7px; }
-    .trend-bolt { width: 11px; height: 15px; }
-    .trend-delta { font-size: 8px; }
-    .trend-previous { display: none; }
-    .led { width: 15px; height: 15px; right: 8px; top: 9px; }
-}
-
 /* RADIO BAR */
 #radioBar {
     position: absolute;
@@ -847,9 +936,9 @@ html, body {
             <div class="kpi-name">OTD</div>
             <div class="led" id="otdLed"></div>
         </div>
-        <div class="kpi-value-row"><div class="kpi-value"><span id="otdValue">--</span><span class="kpi-unit">%</span></div></div><div class="kpi-trend neutral" id="otdTrend"><svg class="trend-bolt" viewBox="0 0 24 32" aria-hidden="true">
+        <div class="kpi-value-row"><div class="kpi-value"><span id="otdValue">--</span><span class="kpi-unit">%</span></div><div class="kpi-trend neutral" id="otdTrend"><svg class="trend-bolt" viewBox="0 0 24 32" aria-hidden="true">
 <path d="M14.5 1.5 L5.5 16 H11 L8.2 30.5 L18.5 13.2 H12.5 Z"></path>
-</svg><div class="trend-meta"><span class="trend-delta">--</span><span class="trend-previous">vs. previous --</span></div></div>
+</svg><div class="trend-meta"><span class="trend-delta">--</span><span class="trend-previous">vs. previous --</span></div></div></div>
         <div class="kpi-bottom"><span class="kpi-status" id="otdStatus">Waiting for data</span></div>
     </div>
 
@@ -858,9 +947,9 @@ html, body {
             <div class="kpi-name">LT</div>
             <div class="led" id="ltLed"></div>
         </div>
-        <div class="kpi-value-row"><div class="kpi-value"><span id="ltValue">--</span><span class="kpi-unit">Days</span></div></div><div class="kpi-trend neutral" id="ltTrend"><svg class="trend-bolt" viewBox="0 0 24 32" aria-hidden="true">
+        <div class="kpi-value-row"><div class="kpi-value"><span id="ltValue">--</span><span class="kpi-unit">Days</span></div><div class="kpi-trend neutral" id="ltTrend"><svg class="trend-bolt" viewBox="0 0 24 32" aria-hidden="true">
 <path d="M14.5 1.5 L5.5 16 H11 L8.2 30.5 L18.5 13.2 H12.5 Z"></path>
-</svg><div class="trend-meta"><span class="trend-delta">--</span><span class="trend-previous">vs. previous --</span></div></div>
+</svg><div class="trend-meta"><span class="trend-delta">--</span><span class="trend-previous">vs. previous --</span></div></div></div>
         <div class="kpi-bottom"><span class="kpi-status" id="ltStatus">Waiting for data</span></div>
     </div>
 
@@ -869,9 +958,9 @@ html, body {
             <div class="kpi-name">OTE</div>
             <div class="led" id="oteLed"></div>
         </div>
-        <div class="kpi-value-row"><div class="kpi-value"><span id="oteValue">--</span><span class="kpi-unit">%</span></div></div><div class="kpi-trend neutral" id="oteTrend"><svg class="trend-bolt" viewBox="0 0 24 32" aria-hidden="true">
+        <div class="kpi-value-row"><div class="kpi-value"><span id="oteValue">--</span><span class="kpi-unit">%</span></div><div class="kpi-trend neutral" id="oteTrend"><svg class="trend-bolt" viewBox="0 0 24 32" aria-hidden="true">
 <path d="M14.5 1.5 L5.5 16 H11 L8.2 30.5 L18.5 13.2 H12.5 Z"></path>
-</svg><div class="trend-meta"><span class="trend-delta">--</span><span class="trend-previous">vs. previous --</span></div></div>
+</svg><div class="trend-meta"><span class="trend-delta">--</span><span class="trend-previous">vs. previous --</span></div></div></div>
         <div class="kpi-bottom"><span class="kpi-status" id="oteStatus">Waiting for data</span></div>
     </div>
 </section>
