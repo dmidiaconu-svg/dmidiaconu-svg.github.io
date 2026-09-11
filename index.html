@@ -749,7 +749,7 @@ html, body {
     left: 2.2%;
     right: 2.2%;
     top: 290px;
-    height: 455px;
+    height: 350px;
 
     z-index: 300;
 
@@ -810,7 +810,7 @@ html, body {
 @media (min-width: 1600px) {
     #chartsArea {
         top: 300px;
-        height: 470px;
+        height: 365px;
         gap: 28px;
     }
 
@@ -1295,7 +1295,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
         (cfg.bars || []).filter(series => !series.labelsOnly);
 
     const barW =
-        Math.min(32, stepX * 0.46);
+        Math.min(30, stepX * 0.44);
 
 
     barSeries.forEach((series, seriesIndex) => {
@@ -1338,44 +1338,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
     });
 
 
-    /* LABEL ONLY SERIES */
-
-    (cfg.labels || []).forEach(series => {
-
-        series.values.forEach((value, i) => {
-
-            if (!Number.isFinite(value)) return;
-
-
-            const baseY =
-                Number.isFinite(series.anchorValues?.[i])
-                    ? Y(series.anchorValues[i]) - 8
-                    : Y(cfg.min) - 18;
-
-
-            ctx.font =
-                series.font || "bold 10px Arial";
-
-            ctx.fillStyle =
-                series.color || "#344054";
-
-            ctx.textAlign = "center";
-            ctx.textBaseline = "bottom";
-
-            ctx.fillText(
-                series.format
-                    ? series.format(value)
-                    : String(value),
-                X(i),
-                Math.max(
-                    margin.top + 10,
-                    baseY
-                )
-            );
-        });
-    });
-
-
+   
     /* TARGET */
 
     if (Number.isFinite(cfg.target)) {
@@ -1391,7 +1354,8 @@ function drawComboChart(canvasId, cfg, progress = 1) {
         );
 
         ctx.lineTo(
-            margin.left + 8 + (W - margin.right - margin.left - 8) * progress,
+            margin.left + 8 +
+            (W - margin.right - margin.left - 8) * progress,
             Y(cfg.target)
         );
 
@@ -1417,7 +1381,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
                 ctx.moveTo(
                     X(i),
-                    Y(value)
+                    Y(cfg.min + (value - cfg.min) * progress)
                 );
 
                 started = true;
@@ -1426,7 +1390,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
                 ctx.lineTo(
                     X(i),
-                    Y(value)
+                    Y(cfg.min + (value - cfg.min) * progress)
                 );
             }
         });
@@ -1448,7 +1412,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
             ctx.arc(
                 X(i),
-                Y(value),
+                Y(cfg.min + (value - cfg.min) * progress),
                 3.2,
                 0,
                 Math.PI * 2
@@ -1459,6 +1423,62 @@ function drawComboChart(canvasId, cfg, progress = 1) {
             ctx.fill();
         });
     });
+
+ /* LABEL ONLY SERIES */
+
+    (cfg.labels || []).forEach(series => {
+
+        series.values.forEach((value, i) => {
+
+            if (!Number.isFinite(value)) return;
+
+
+            const baseY =
+                Number.isFinite(series.anchorValues?.[i])
+                    ? Y(series.anchorValues[i]) - 8
+                    : Y(cfg.min) - 18;
+
+
+            ctx.font =
+                series.font || "bold 10px Arial";
+
+            ctx.fillStyle =
+                series.color || "#344054";
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
+
+const labelText =
+    series.format
+        ? series.format(value)
+        : String(value);
+
+const labelX = X(i);
+const labelY = Math.max(
+    margin.top + 10,
+    baseY
+);
+
+ctx.lineWidth = 3;
+ctx.strokeStyle = "rgba(255,255,255,.95)";
+ctx.strokeText(
+    labelText,
+    labelX,
+    labelY
+);
+
+ctx.fillStyle =
+    series.color || "#344054";
+
+ctx.fillText(
+    labelText,
+    labelX,
+    labelY
+);
+        });
+    });
+
+    ctx.restore();
 
 
     /* MONTH LABELS */
@@ -1804,7 +1824,8 @@ window.addEventListener(
 
         if (dashboardChartData) {
             drawDashboardCharts(
-                dashboardChartData
+                dashboardChartData,
+                1
             );
         }
     }
@@ -1812,22 +1833,28 @@ window.addEventListener(
 
 
 
-let chartsInitialAnimationDone = false;
+let latestDashboardData = null;
+let chartIntroPlayed = false;
 
 function animateDashboardChartsOnce(data) {
-    const duration = 900;
+    if (!data?.charts || chartIntroPlayed) return;
+
+    chartIntroPlayed = true;
+
+    const duration = 1050;
     const start = performance.now();
 
     function frame(now) {
-        const rawProgress = Math.min((now - start) / duration, 1);
-        const progress = 1 - Math.pow(1 - rawProgress, 3);
+        const raw = Math.min((now - start) / duration, 1);
+
+        // Smooth ease-out.
+        const progress = 1 - Math.pow(1 - raw, 3);
 
         drawDashboardCharts(data, progress);
 
-        if (rawProgress < 1) {
+        if (raw < 1) {
             requestAnimationFrame(frame);
         } else {
-            chartsInitialAnimationDone = true;
             drawDashboardCharts(data, 1);
         }
     }
@@ -1847,10 +1874,15 @@ async function loadDashboardKPI() {
 
         const data = await response.json();
 
-        if (!chartsInitialAnimationDone) {
-            animateDashboardChartsOnce(data);
-        } else {
+        latestDashboardData = data;
+
+        const startScreenHidden =
+            document.getElementById("startScreen").style.display === "none";
+
+        if (chartIntroPlayed) {
             drawDashboardCharts(data, 1);
+        } else if (startScreenHidden) {
+            animateDashboardChartsOnce(data);
         }
 
         const otd = Number(data.kpi.otd);
@@ -2060,6 +2092,10 @@ document.getElementById("startScreen").addEventListener("click", function() {
     }
 
     this.style.display = "none";
+
+    if (latestDashboardData) {
+        animateDashboardChartsOnce(latestDashboardData);
+    }
 
     const kissButton = document.querySelector("#radioBar button");
     playRadio("https://live.kissfm.ro/kissfm.aacp", kissButton);
