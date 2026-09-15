@@ -1416,8 +1416,10 @@ function drawComboChart(canvasId, cfg, progress = 1) {
             ctx.textAlign = "right";
             ctx.textBaseline = "middle";
 
+            /* Place target badge at the top-right of the plot:
+               LT -> around 20, OTD/OTE -> around 120% */
             const labelX = W - margin.right - 4;
-            const labelY = targetY;
+            const labelY = margin.top + 10;
             const textWidth = ctx.measureText(targetText).width;
             const badgeH = 15;
             const badgePadX = 6;
