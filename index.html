@@ -1295,18 +1295,26 @@ function drawComboChart(canvasId, cfg, progress = 1) {
         const highlightX = margin.left + stepX * currentMonthIndex + stepX * 0.08;
         const highlightW = stepX * 0.84;
 
-        /* Gentle continuous shimmer for the current month */
+        /* Visible but still discreet pulse for the current month */
         const shimmer =
-            0.5 + 0.5 * Math.sin(performance.now() / 650);
+            0.5 + 0.5 * Math.sin(performance.now() / 520);
+
+        ctx.save();
 
         ctx.fillStyle =
-            "rgba(0,87,168," + (0.035 + shimmer * 0.055) + ")";
+            "rgba(0,87,168," + (0.045 + shimmer * 0.12) + ")";
         ctx.fillRect(highlightX, margin.top, highlightW, plotH);
 
+        ctx.shadowColor =
+            "rgba(0,87,168," + (0.18 + shimmer * 0.38) + ")";
+        ctx.shadowBlur = 4 + shimmer * 9;
+
         ctx.strokeStyle =
-            "rgba(0,87,168," + (0.09 + shimmer * 0.10) + ")";
-        ctx.lineWidth = 1;
+            "rgba(0,87,168," + (0.18 + shimmer * 0.35) + ")";
+        ctx.lineWidth = 1.4;
         ctx.strokeRect(highlightX, margin.top, highlightW, plotH);
+
+        ctx.restore();
     }
 
 
@@ -1590,9 +1598,15 @@ ctx.fillText(
     chartMonths.forEach((month, i) => {
 
         if (i === currentMonthIndex) {
+            const monthPulse =
+                0.72 + 0.28 * (0.5 + 0.5 * Math.sin(performance.now() / 520));
+
             ctx.save();
+            ctx.globalAlpha = monthPulse;
             ctx.fillStyle = "#0057a8";
             ctx.font = "bold 11px Arial";
+            ctx.shadowColor = "rgba(0,87,168,.45)";
+            ctx.shadowBlur = 2 + monthPulse * 3;
             ctx.fillText(month, X(i), Y(cfg.min) + 9);
             ctx.restore();
         } else {
