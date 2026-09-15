@@ -1216,6 +1216,12 @@ const chartMonths = [
     "Apr","Mai","Iun","Iul","Aug","Sep"
 ];
 
+/* Luna curenta in anul fiscal Oct-Sep */
+function getCurrentChartMonthIndex() {
+    const month = new Date().getMonth();
+    return month >= 9 ? month - 9 : month + 3;
+}
+
 let dashboardChartData = null;
 
 
@@ -1280,6 +1286,22 @@ function drawComboChart(canvasId, cfg, progress = 1) {
         margin.top +
         plotH -
         ((value - cfg.min) / (cfg.max - cfg.min)) * plotH;
+
+
+    /* CURRENT MONTH HIGHLIGHT */
+    const currentMonthIndex = getCurrentChartMonthIndex();
+
+    if (currentMonthIndex >= 0 && currentMonthIndex < chartMonths.length) {
+        const highlightX = margin.left + stepX * currentMonthIndex + stepX * 0.08;
+        const highlightW = stepX * 0.84;
+
+        ctx.fillStyle = "rgba(0,87,168,.055)";
+        ctx.fillRect(highlightX, margin.top, highlightW, plotH);
+
+        ctx.strokeStyle = "rgba(0,87,168,.12)";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(highlightX, margin.top, highlightW, plotH);
+    }
 
 
     /* GRID + Y AXIS */
@@ -1371,24 +1393,40 @@ function drawComboChart(canvasId, cfg, progress = 1) {
     /* TARGET */
 
     if (Number.isFinite(cfg.target)) {
+        const targetY = Y(cfg.target);
+        const targetStartX = margin.left + 8;
+        const targetEndX = targetStartX +
+            (W - margin.right - margin.left - 8) * progress;
 
         ctx.strokeStyle = "#f3c400";
         ctx.lineWidth = 3;
-
         ctx.beginPath();
-
-        ctx.moveTo(
-            margin.left + 8,
-            Y(cfg.target)
-        );
-
-        ctx.lineTo(
-            margin.left + 8 +
-            (W - margin.right - margin.left - 8) * progress,
-            Y(cfg.target)
-        );
-
+        ctx.moveTo(targetStartX, targetY);
+        ctx.lineTo(targetEndX, targetY);
         ctx.stroke();
+
+        if (progress > 0.82) {
+            const targetAlpha = Math.min(1, (progress - 0.82) / 0.18);
+            const targetText = "TARGET " +
+                (cfg.percentAxis ? Math.round(cfg.target) + "%" : String(cfg.target));
+
+            ctx.save();
+            ctx.globalAlpha = targetAlpha;
+            ctx.font = "bold 9px Arial";
+            ctx.textAlign = "right";
+            ctx.textBaseline = "bottom";
+
+            const labelX = W - margin.right - 3;
+            const labelY = Math.max(margin.top + 10, targetY - 4);
+            const textWidth = ctx.measureText(targetText).width;
+
+            ctx.fillStyle = "rgba(248,250,253,.90)";
+            ctx.fillRect(labelX - textWidth - 7, labelY - 11, textWidth + 10, 14);
+
+            ctx.fillStyle = "#9a7a00";
+            ctx.fillText(targetText, labelX - 2, labelY);
+            ctx.restore();
+        }
     }
 
 
@@ -1520,11 +1558,15 @@ ctx.fillText(
 
     chartMonths.forEach((month, i) => {
 
-        ctx.fillText(
-            month,
-            X(i),
-            Y(cfg.min) + 9
-        );
+        if (i === currentMonthIndex) {
+            ctx.save();
+            ctx.fillStyle = "#0057a8";
+            ctx.font = "bold 11px Arial";
+            ctx.fillText(month, X(i), Y(cfg.min) + 9);
+            ctx.restore();
+        } else {
+            ctx.fillText(month, X(i), Y(cfg.min) + 9);
+        }
     });
 
 
