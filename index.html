@@ -1412,19 +1412,42 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
             ctx.save();
             ctx.globalAlpha = targetAlpha;
-            ctx.font = "bold 9px Arial";
+            ctx.font = "bold 8.5px Arial";
             ctx.textAlign = "right";
-            ctx.textBaseline = "bottom";
+            ctx.textBaseline = "middle";
 
-            const labelX = W - margin.right - 3;
-            const labelY = Math.max(margin.top + 10, targetY - 4);
+            const labelX = W - margin.right - 4;
+            const labelY = targetY;
             const textWidth = ctx.measureText(targetText).width;
+            const badgeH = 15;
+            const badgePadX = 6;
+            const badgeX = labelX - textWidth - badgePadX * 2;
+            const badgeY = labelY - badgeH / 2;
 
-            ctx.fillStyle = "rgba(248,250,253,.90)";
-            ctx.fillRect(labelX - textWidth - 7, labelY - 11, textWidth + 10, 14);
+            /* Compact badge anchored to the right end of target line */
+            ctx.fillStyle = "rgba(255,247,196,.98)";
+            ctx.fillRect(
+                badgeX,
+                badgeY,
+                textWidth + badgePadX * 2,
+                badgeH
+            );
 
-            ctx.fillStyle = "#9a7a00";
-            ctx.fillText(targetText, labelX - 2, labelY);
+            ctx.strokeStyle = "rgba(243,196,0,.95)";
+            ctx.lineWidth = 1;
+            ctx.strokeRect(
+                badgeX,
+                badgeY,
+                textWidth + badgePadX * 2,
+                badgeH
+            );
+
+            ctx.fillStyle = "#806500";
+            ctx.fillText(
+                targetText,
+                labelX - badgePadX,
+                labelY + 0.5
+            );
             ctx.restore();
         }
     }
