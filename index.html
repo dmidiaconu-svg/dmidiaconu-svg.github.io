@@ -1005,14 +1005,40 @@ html, body {
 
 /* HOSHIN KANRI PERIODIC OVERLAY */
 #hoshinOverlay {
-    position: fixed; inset: 0; z-index: 12000;
-    display: flex; align-items: center; justify-content: center;
-    background: #eef2f7; opacity: 0; visibility: hidden;
-    transition: opacity 1s ease, visibility 1s ease;
-}
-#hoshinOverlay.show { opacity: 1; visibility: visible; }
-#hoshinOverlay img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f4f7fa;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 1.2s ease-in-out,
+        visibility 0s linear 1.2s;
+}
+
+#hoshinOverlay.show {
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 1.2s ease-in-out,
+        visibility 0s;
+}
+
+#hoshinOverlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+    
 </style>
 </head>
 
