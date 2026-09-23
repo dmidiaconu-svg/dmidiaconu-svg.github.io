@@ -1557,36 +1557,40 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
             ctx.beginPath();
 
-            ctx.arc(
-                X(i),
-                Y(cfg.min + (value - cfg.min) * progress),
-                4.2,
-                0,
-                Math.PI * 2
-            );
+const isGood = cfg.inverseTarget
+    ? value <= cfg.target
+    : value >= cfg.target;
 
-            let pointColor = series.color;
+const px = X(i);
+const py = Y(cfg.min + (value - cfg.min) * progress);
 
-if (Number.isFinite(cfg.target)) {
+// Punctul este puțin mai mare când KPI-ul NU atinge targetul
+const radius = isGood ? 3.6 : 4.5;
 
-    if (cfg.inverseTarget) {
-        // LT: mai mic sau egal cu target = bine
-        pointColor = value <= cfg.target
-            ? "#22c55e"
-            : "#dc2626";
-    } else {
-        // OTD / OTE: mai mare sau egal cu target = bine
-        pointColor = value >= cfg.target
-            ? "#22c55e"
-            : "#dc2626";
-    }
+ctx.save();
+
+// Glow foarte discret doar pentru abatere
+if (!isGood) {
+    ctx.shadowColor = "rgba(220,38,38,.30)";
+    ctx.shadowBlur = 5;
 }
 
-ctx.fillStyle = pointColor;
+// Interior = culoarea seriei SOM / LOM
+ctx.beginPath();
+ctx.arc(px, py, radius, 0, Math.PI * 2);
+ctx.fillStyle = series.color;
 ctx.fill();
-        });
-    });
 
+// Inel = status față de target
+ctx.shadowBlur = 0;
+ctx.strokeStyle = isGood
+    ? "rgba(255,255,255,.85)"
+    : "#dc2626"
+
+ctx.lineWidth = isGood ? 1.7 : 2.2;
+ctx.stroke();
+
+ctx.restore();
  /* LABEL ONLY SERIES */
 
     (cfg.labels || []).forEach(series => {
