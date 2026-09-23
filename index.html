@@ -1560,14 +1560,30 @@ function drawComboChart(canvasId, cfg, progress = 1) {
             ctx.arc(
                 X(i),
                 Y(cfg.min + (value - cfg.min) * progress),
-                3.2,
+                4.2,
                 0,
                 Math.PI * 2
             );
 
-            ctx.fillStyle = series.color;
+            let pointColor = series.color;
 
-            ctx.fill();
+if (Number.isFinite(cfg.target)) {
+
+    if (cfg.inverseTarget) {
+        // LT: mai mic sau egal cu target = bine
+        pointColor = value <= cfg.target
+            ? "#22c55e"
+            : "#dc2626";
+    } else {
+        // OTD / OTE: mai mare sau egal cu target = bine
+        pointColor = value >= cfg.target
+            ? "#22c55e"
+            : "#dc2626";
+    }
+}
+
+ctx.fillStyle = pointColor;
+ctx.fill();
         });
     });
 
@@ -1875,7 +1891,7 @@ function drawDashboardCharts(data, progress = 1) {
                 tick: 2,
                 percentAxis: false,
                 target: Number(c.lt.target ?? 14),
-
+                inverseTarget: true,
                 bars: [
                     {
                         name: "LT Total",
