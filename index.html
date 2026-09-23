@@ -1566,12 +1566,6 @@ series.values.forEach((value, i) => {
 
     ctx.save();
 
-    // Glow discret doar pentru abatere
-    if (!isGood) {
-        ctx.shadowColor = "rgba(220,38,38,.30)";
-        ctx.shadowBlur = 5;
-    }
-
     // Interiorul păstrează culoarea seriei
     ctx.beginPath();
     ctx.arc(px, py, radius, 0, Math.PI * 2);
