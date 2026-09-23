@@ -1357,7 +1357,8 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
         ctx.restore();
     }
-
+        });   // închide series.values.forEach
+    });       // închide (cfg.lines || []).forEach
 
     /* GRID + Y AXIS */
 
@@ -1551,46 +1552,48 @@ function drawComboChart(canvasId, cfg, progress = 1) {
         ctx.stroke();
 
 
-        series.values.forEach((value, i) => {
+series.values.forEach((value, i) => {
 
-            if (!Number.isFinite(value)) return;
+    if (!Number.isFinite(value)) return;
 
-            ctx.beginPath();
+    const isGood = cfg.inverseTarget
+        ? value <= cfg.target
+        : value >= cfg.target;
 
-const isGood = cfg.inverseTarget
-    ? value <= cfg.target
-    : value >= cfg.target;
+    const px = X(i);
+    const py = Y(cfg.min + (value - cfg.min) * progress);
 
-const px = X(i);
-const py = Y(cfg.min + (value - cfg.min) * progress);
+    // Mai discret pentru OK, mai vizibil pentru abatere
+    const radius = isGood ? 3.6 : 4.5;
 
-// Punctul este puțin mai mare când KPI-ul NU atinge targetul
-const radius = isGood ? 3.6 : 4.5;
+    ctx.save();
 
-ctx.save();
+    // Glow discret doar pentru abatere
+    if (!isGood) {
+        ctx.shadowColor = "rgba(220,38,38,.30)";
+        ctx.shadowBlur = 5;
+    }
 
-// Glow foarte discret doar pentru abatere
-if (!isGood) {
-    ctx.shadowColor = "rgba(220,38,38,.30)";
-    ctx.shadowBlur = 5;
-}
+    // Interiorul păstrează culoarea seriei
+    ctx.beginPath();
+    ctx.arc(px, py, radius, 0, Math.PI * 2);
+    ctx.fillStyle = series.color;
+    ctx.fill();
 
-// Interior = culoarea seriei SOM / LOM
-ctx.beginPath();
-ctx.arc(px, py, radius, 0, Math.PI * 2);
-ctx.fillStyle = series.color;
-ctx.fill();
+    // Contur status
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = isGood
+        ? "rgba(255,255,255,.85)"
+        : "#dc2626";
 
-// Inel = status față de target
-ctx.shadowBlur = 0;
-ctx.strokeStyle = isGood
-    ? "rgba(255,255,255,.85)"
-    : "#dc2626"
+    ctx.lineWidth = isGood ? 1.7 : 2.2;
+    ctx.stroke();
 
-ctx.lineWidth = isGood ? 1.7 : 2.2;
-ctx.stroke();
+    ctx.restore();
 
-ctx.restore();
+}); // series.values
+
+}); // cfg.lines
  /* LABEL ONLY SERIES */
 
     (cfg.labels || []).forEach(series => {
