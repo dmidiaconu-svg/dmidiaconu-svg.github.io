@@ -2025,12 +2025,24 @@ function drawDashboardCharts(data, progress = 1) {
 
 
 /* Gentle animation only for the current-month highlight */
-let currentMonthShimmerFrame = null;
 
-function animateCurrentMonthHighlight() {
-    if (dashboardChartData && chartIntroPlayed) {
-        drawDashboardCharts(dashboardChartData, 1);
+let currentMonthShimmerFrame = null;
+let lastShimmerFrame = 0;
+
+function animateCurrentMonthHighlight(now) {
+
+    // ~15 FPS pentru efectele de puls
+    const frameInterval = 66;
+
+    if (now - lastShimmerFrame >= frameInterval) {
+
+        lastShimmerFrame = now;
+
+        if (dashboardChartData && chartIntroPlayed) {
+            drawDashboardCharts(dashboardChartData, 1);
+        }
     }
+
     currentMonthShimmerFrame =
         requestAnimationFrame(animateCurrentMonthHighlight);
 }
@@ -2061,13 +2073,14 @@ function animateDashboardChartsOnce(data) {
 
     chartIntroPlayed = true;
 
-    const duration = 4000;
+    const duration = 3000;      // 3 secunde
+    const frameInterval = 33;   // ~30 FPS
     const start = performance.now();
+
+    let lastFrame = 0;
 
     function stageProgress(raw, from, to) {
         const p = Math.max(0, Math.min((raw - from) / (to - from), 1));
-
-        // Smooth ease-out pentru fiecare etapă
         return 1 - Math.pow(1 - p, 3);
     }
 
@@ -2075,15 +2088,21 @@ function animateDashboardChartsOnce(data) {
 
         const raw = Math.min((now - start) / duration, 1);
 
-        const progress = {
-            bars:   stageProgress(raw, 0.00, 0.32),
-            line1:  stageProgress(raw, 0.20, 0.55),
-            line2:  stageProgress(raw, 0.38, 0.72),
-            target: stageProgress(raw, 0.60, 0.88),
-            labels: stageProgress(raw, 0.80, 1.00)
-        };
+        // Nu redesena mai des de ~30 FPS
+        if (now - lastFrame >= frameInterval || raw >= 1) {
 
-        drawDashboardCharts(data, progress);
+            lastFrame = now;
+
+            const progress = {
+                bars:   stageProgress(raw, 0.00, 0.32),
+                line1:  stageProgress(raw, 0.20, 0.55),
+                line2:  stageProgress(raw, 0.38, 0.72),
+                target: stageProgress(raw, 0.60, 0.88),
+                labels: stageProgress(raw, 0.80, 1.00)
+            };
+
+            drawDashboardCharts(data, progress);
+        }
 
         if (raw < 1) {
             requestAnimationFrame(frame);
