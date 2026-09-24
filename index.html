@@ -2113,7 +2113,12 @@ function animateDashboardChartsOnce(data) {
 
     requestAnimationFrame(frame);
 }
+function replayChartAnimation() {
+    if (!latestDashboardData?.charts) return;
 
+    chartIntroPlayed = false;
+    animateDashboardChartsOnce(latestDashboardData);
+}
 async function loadDashboardKPI() {
     try {
         const response = await fetch("data/dashboard.json?t=" + Date.now(), {
@@ -2192,7 +2197,8 @@ async function loadDashboardKPI() {
 
 loadDashboardKPI();
 setInterval(loadDashboardKPI, 30000);
-
+// Reface animatia graficelor la fiecare 15 minute
+setInterval(replayChartAnimation, 15 * 60 * 1000);
 /* =========================================================
    RADIO
    ========================================================= */
