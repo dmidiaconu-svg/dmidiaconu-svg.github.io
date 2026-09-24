@@ -1279,7 +1279,15 @@ function getNiceMax(values, minimum, step) {
 
 
 function drawComboChart(canvasId, cfg, progress = 1) {
-
+    const anim = typeof progress === "object"
+        ? progress
+        : {
+            bars: progress,
+            line1: progress,
+            line2: progress,
+            target: progress,
+            labels: progress
+        };
     const canvas = document.getElementById(canvasId);
 
     if (!canvas) return;
@@ -1426,7 +1434,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
             const bottom = Y(cfg.min);
             const finalTop = Y(value);
-            const top = bottom - (bottom - finalTop) * progress;
+            const top = bottom - (bottom - finalTop) * anim.bars;
 
 
             ctx.fillStyle =
@@ -1450,7 +1458,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
         const targetY = Y(cfg.target);
         const targetStartX = margin.left + 8;
         const targetEndX = targetStartX +
-            (W - margin.right - margin.left - 8) * progress;
+            (W - margin.right - margin.left - 8) * anim.target;
 
         ctx.strokeStyle = "#f3c400";
         ctx.lineWidth = 3;
@@ -1459,8 +1467,8 @@ function drawComboChart(canvasId, cfg, progress = 1) {
         ctx.lineTo(targetEndX, targetY);
         ctx.stroke();
 
-        if (progress > 0.82) {
-            const targetAlpha = Math.min(1, (progress - 0.82) / 0.18);
+        if (anim.target > 0.82) {
+            const targetAlpha = Math.min(1, (anim.target - 0.82) / 0.18);
             const targetText = "TARGET " +
                 (cfg.percentAxis ? Math.round(cfg.target) + "%" : String(cfg.target));
 
@@ -1511,7 +1519,12 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
     /* LINES */
 
-    (cfg.lines || []).forEach(series => {
+    (cfg.lines || []).forEach((series, seriesIndex) => {
+
+    const lineProgress =
+        seriesIndex === 0
+            ? anim.line1
+            : anim.line2;
 
         ctx.beginPath();
 
@@ -1527,7 +1540,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
                 ctx.moveTo(
                     X(i),
-                    Y(cfg.min + (value - cfg.min) * progress)
+                    Y(cfg.min + (value - cfg.min) * lineProgress)
                 );
 
                 started = true;
@@ -1536,7 +1549,7 @@ function drawComboChart(canvasId, cfg, progress = 1) {
 
                 ctx.lineTo(
                     X(i),
-                    Y(cfg.min + (value - cfg.min) * progress)
+                    Y(cfg.min + (value - cfg.min) * lineProgress)
                 );
             }
         });
@@ -1559,7 +1572,7 @@ series.values.forEach((value, i) => {
         : value >= cfg.target;
 
     const px = X(i);
-    const py = Y(cfg.min + (value - cfg.min) * progress);
+    const py = Y(cfg.min + (value - cfg.min) * lineProgress);
 
     // Mai discret pentru OK, mai vizibil pentru abatere
     const radius = isGood ? 3.6 : 4.5;
@@ -2048,14 +2061,27 @@ function animateDashboardChartsOnce(data) {
 
     chartIntroPlayed = true;
 
-    const duration = 2800;
+    const duration = 4000;
     const start = performance.now();
 
+    function stageProgress(raw, from, to) {
+        const p = Math.max(0, Math.min((raw - from) / (to - from), 1));
+
+        // Smooth ease-out pentru fiecare etapă
+        return 1 - Math.pow(1 - p, 3);
+    }
+
     function frame(now) {
+
         const raw = Math.min((now - start) / duration, 1);
 
-        // Smooth ease-out.
-        const progress = 1 - Math.pow(1 - raw, 3);
+        const progress = {
+            bars:   stageProgress(raw, 0.00, 0.32),
+            line1:  stageProgress(raw, 0.20, 0.55),
+            line2:  stageProgress(raw, 0.38, 0.72),
+            target: stageProgress(raw, 0.60, 0.88),
+            labels: stageProgress(raw, 0.80, 1.00)
+        };
 
         drawDashboardCharts(data, progress);
 
