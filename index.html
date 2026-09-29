@@ -1148,8 +1148,10 @@ html, body {
     <button onclick="playRadio('https://live.radio-impuls.ro/stream', this)">IMPULS</button>
 </div>
 <audio id="audio" controls></audio>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <script>
+
 /* =========================================================
    KPI JSON + VBA LOGIC
    JSON expected example:
@@ -2203,15 +2205,95 @@ setInterval(replayChartAnimation, 2 * 60 * 1000);
    RADIO
    ========================================================= */
 const audio = document.getElementById("audio");
+let hls = null;
 
 function playRadio(url, button) {
+
+    // Oprim postul anterior
     audio.pause();
-    audio.src = url;
+
+    // Dacă era activ HLS, îl distrugem
+    if (hls) {
+        hls.destroy();
+        hls = null;
+    }
+
+    audio.removeAttribute("src");
     audio.load();
 
-    audio.play().catch(function(error) {
-        console.log("Radio playback:", error);
-    });
+    // RADIO ZU - HLS
+    if (url.includes(".m3u8")) {
+
+        if (window.Hls && Hls.isSupported()) {
+
+            hls = new Hls({
+                enableWorker: true,
+                lowLatencyMode: false
+            });
+
+            hls.loadSource(url);
+            hls.attachMedia(audio);
+
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+
+                audio.play().catch(function(error) {
+                    console.log("ZU playback:", error);
+                });
+
+            });
+
+            hls.on(Hls.Events.ERROR, function(event, data) {
+
+                console.log("ZU HLS error:", data);
+
+                if (data.fatal) {
+
+                    switch (data.type) {
+
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            console.log("ZU reconnect...");
+                            hls.startLoad();
+                            break;
+
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            console.log("ZU media recovery...");
+                            hls.recoverMediaError();
+                            break;
+
+                        default:
+                            console.log("ZU fatal error.");
+                            break;
+                    }
+                }
+            });
+
+        } else if (audio.canPlayType("application/vnd.apple.mpegurl")) {
+
+            // Browser cu suport HLS nativ
+            audio.src = url;
+            audio.load();
+
+            audio.play().catch(function(error) {
+                console.log("ZU native HLS:", error);
+            });
+
+        } else {
+
+            console.log("HLS nu este suportat de acest browser.");
+        }
+
+    } else {
+
+        // KISS / MAGIC / SUPER FM / IMPULS
+        // rămân exact pe sistemul actual
+
+        audio.src = url;
+        audio.load();
+
+        audio.play().catch(function(error) {
+            console.log("Radio playback:", error);
+        });
+    }
 
     document.querySelectorAll("#radioBar button").forEach(function(btn) {
         btn.classList.remove("active");
