@@ -2457,6 +2457,7 @@ document.getElementById("startScreen").addEventListener("click", function() {
    HOSHIN KANRI - 20 secunde la fiecare 15 minute
    Prima aparitie: la 15 minute dupa pornirea dashboard-ului.
    ========================================================= */
+const HOSHIN_ENABLED = false;
 const HOSHIN_INTERVAL_MS = 30 * 60 * 1000;
 const HOSHIN_DURATION_MS = 30 * 1000;
 let hoshinTimer = null;
@@ -2475,6 +2476,8 @@ function showHoshinKanri() {
 }
 
 function startHoshinRotation() {
+    if (!HOSHIN_ENABLED) return;
+    
     if (hoshinTimer) return;
     hoshinTimer = setInterval(showHoshinKanri, HOSHIN_INTERVAL_MS);
 }
