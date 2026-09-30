@@ -704,6 +704,21 @@ html, body {
     background: rgba(220,38,38,.55);
 }
 
+/* =========================================================
+   NEUTRAL / NO DATA
+   ========================================================= */
+
+.led.neutral {
+    background: rgb(152, 162, 179);
+
+    box-shadow:
+        0 0 6px rgba(152,162,179,.55),
+        0 0 14px rgba(152,162,179,.30);
+}
+
+.led.neutral::after {
+    background: rgba(152,162,179,.20);
+}
 
 /* =========================================================
    BULINA RESPIRA
@@ -1167,69 +1182,143 @@ function setLed(id, statusClass) {
 }
 
 function updateKPIStatus(otd, ote, lt) {
-    // OTD - VBA logic
-    if (otd >= 85) {
+
+    // =====================================================
+    // OTD
+    // =====================================================
+    if (otd === null) {
+
+        setLed("otdLed", "neutral");
+        document.getElementById("otdStatus").textContent =
+            "Waiting for data";
+
+    } else if (otd >= 85) {
+
         setLed("otdLed", "green");
-        document.getElementById("otdStatus").textContent = "Target: 85%";
+        document.getElementById("otdStatus").textContent =
+            "Target: 85%";
+
     } else if (otd >= 80) {
+
         setLed("otdLed", "orange");
-        document.getElementById("otdStatus").textContent = "Warning Zone";
+        document.getElementById("otdStatus").textContent =
+            "Warning Zone";
+
     } else {
+
         setLed("otdLed", "red");
-        document.getElementById("otdStatus").textContent = "Below Target";
+        document.getElementById("otdStatus").textContent =
+            "Below Target";
     }
 
-    // OTE - VBA logic
-    if (ote >= 90) {
+
+    // =====================================================
+    // OTE
+    // =====================================================
+    if (ote === null) {
+
+        setLed("oteLed", "neutral");
+        document.getElementById("oteStatus").textContent =
+            "Waiting for data";
+
+    } else if (ote >= 90) {
+
         setLed("oteLed", "green");
-        document.getElementById("oteStatus").textContent = "Target: 90%";
+        document.getElementById("oteStatus").textContent =
+            "Target: 90%";
+
     } else if (ote >= 85) {
+
         setLed("oteLed", "orange");
-        document.getElementById("oteStatus").textContent = "Warning Zone";
+        document.getElementById("oteStatus").textContent =
+            "Warning Zone";
+
     } else {
+
         setLed("oteLed", "red");
-        document.getElementById("oteStatus").textContent = "Below Target";
+        document.getElementById("oteStatus").textContent =
+            "Below Target";
     }
 
-    // LT - VBA logic
-    if (lt <= 14) {
+
+    // =====================================================
+    // LT
+    // =====================================================
+    if (lt === null) {
+
+        setLed("ltLed", "neutral");
+        document.getElementById("ltStatus").textContent =
+            "Waiting for data";
+
+    } else if (lt <= 14) {
+
         setLed("ltLed", "green");
-        document.getElementById("ltStatus").textContent = "Target: 14";
+        document.getElementById("ltStatus").textContent =
+            "Target: 14";
+
     } else if (lt <= 15) {
+
         setLed("ltLed", "orange");
-        document.getElementById("ltStatus").textContent = "Warning Zone";
+        document.getElementById("ltStatus").textContent =
+            "Warning Zone";
+
     } else {
+
         setLed("ltLed", "red");
-        document.getElementById("ltStatus").textContent = "Above Target";
+        document.getElementById("ltStatus").textContent =
+            "Above Target";
     }
 }
 
 
 function updateTrend(id, currentValue, oldValue, inverse = false, suffix = "") {
+
     const trend = document.getElementById(id);
 
-    if (!trend || !Number.isFinite(currentValue) || !Number.isFinite(oldValue)) {
+    if (!trend) return;
+
+    const delta = trend.querySelector(".trend-delta");
+    const previous = trend.querySelector(".trend-previous");
+
+    // Nu exista suficiente date pentru trend
+    if (
+        currentValue === null ||
+        oldValue === null ||
+        !Number.isFinite(currentValue) ||
+        !Number.isFinite(oldValue)
+    ) {
+        trend.className = "kpi-trend neutral";
+        delta.textContent = "--";
+        previous.textContent = "vs. previous --";
         return;
     }
 
     const difference = currentValue - oldValue;
 
-    trend.classList.remove("positive", "negative", "neutral");
+    trend.classList.remove(
+        "positive",
+        "negative",
+        "neutral"
+    );
 
-    const delta = trend.querySelector(".trend-delta");
-    const previous = trend.querySelector(".trend-previous");
-
-    previous.textContent = "vs. previous " + oldValue.toFixed(1) + suffix;
+    previous.textContent =
+        "vs. previous " +
+        oldValue.toFixed(1) +
+        suffix;
 
     if (Math.abs(difference) < 0.05) {
+
         trend.classList.add("neutral");
         delta.textContent = "0.0" + suffix;
         return;
     }
 
-    // OTD / OTE: cresterea este buna.
-    // LT: scaderea este buna, deci folosim inverse = true.
-    const isPositive = inverse ? difference < 0 : difference > 0;
+    // OTD / OTE: cresterea este buna
+    // LT: scaderea este buna
+    const isPositive =
+        inverse
+            ? difference < 0
+            : difference > 0;
 
     if (isPositive) {
         trend.classList.add("positive");
@@ -1237,10 +1326,14 @@ function updateTrend(id, currentValue, oldValue, inverse = false, suffix = "") {
         trend.classList.add("negative");
     }
 
-    const sign = difference > 0 ? "+" : "-";
-    delta.textContent = sign + Math.abs(difference).toFixed(1) + suffix;
-}
+    const sign =
+        difference > 0 ? "+" : "-";
 
+    delta.textContent =
+        sign +
+        Math.abs(difference).toFixed(1) +
+        suffix;
+}
 function getRefreshTime(lastUpdate) {
     if (!lastUpdate) return "--:--";
 
@@ -2144,23 +2237,35 @@ async function loadDashboardKPI() {
             animateDashboardChartsOnce(data);
         }
 
-        const otd = Number(data.kpi.otd);
-        const ote = Number(data.kpi.ote);
-        const lt = Number(data.kpi.lt);
+const toNumberOrNull = value => {
+    if (value === null || value === undefined || value === "") {
+        return null;
+    }
 
-        const oldOtd = Number(data.old?.otd);
-        const oldOte = Number(data.old?.ote);
-        const oldLt = Number(data.old?.lt);
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+};
 
-        if (![otd, ote, lt].every(Number.isFinite)) {
-            throw new Error("Invalid KPI values in dashboard.json");
-        }
+const otd = toNumberOrNull(data.kpi?.otd);
+const ote = toNumberOrNull(data.kpi?.ote);
+const lt = toNumberOrNull(data.kpi?.lt);
 
-        document.getElementById("otdValue").textContent = otd.toFixed(1);
-        document.getElementById("oteValue").textContent = ote.toFixed(1);
-        document.getElementById("ltValue").textContent = lt.toFixed(1);
+const oldOtd = toNumberOrNull(data.old?.otd);
+const oldOte = toNumberOrNull(data.old?.ote);
+const oldLt = toNumberOrNull(data.old?.lt);
 
-        updateKPIStatus(otd, ote, lt);
+
+
+document.getElementById("otdValue").textContent =
+    otd === null ? "--" : otd.toFixed(1);
+
+document.getElementById("oteValue").textContent =
+    ote === null ? "--" : ote.toFixed(1);
+
+document.getElementById("ltValue").textContent =
+    lt === null ? "--" : lt.toFixed(1);
+
+updateKPIStatus(otd, ote, lt);
 
         updateTrend("otdTrend", otd, oldOtd, false, "%");
         updateTrend("oteTrend", ote, oldOte, false, "%");
