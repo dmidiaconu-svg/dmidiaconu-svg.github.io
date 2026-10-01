@@ -1689,20 +1689,19 @@ series.values.forEach((value, i) => {
     ctx.fillStyle = series.color;
     ctx.fill();
 
-    // Contur status
+// Contur status
 ctx.shadowBlur = 0;
 
-if (isGood) {
 if (!hasProjects) {
 
-    // Fara proiecte = punct neutru, fara puls
+    // 0 proiecte = fara avertizare
     ctx.strokeStyle = "rgba(152,162,179,.65)";
     ctx.lineWidth = 1.5;
     ctx.shadowBlur = 0;
 
 } else if (isGood) {
 
-    // Punct OK - contur discret
+    // Exista proiecte si KPI este OK
     ctx.strokeStyle = "rgba(255,255,255,.85)";
     ctx.lineWidth = 1.7;
 
