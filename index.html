@@ -1662,6 +1662,15 @@ series.values.forEach((value, i) => {
 
     if (!Number.isFinite(value)) return;
 
+    // Numarul de proiecte din luna respectiva
+    const projectCount =
+        Array.isArray(cfg.projectCounts)
+            ? Number(cfg.projectCounts[i] ?? 0)
+            : 1;
+
+    // Daca nu exista proiecte, punctul NU trebuie tratat ca abatere
+    const hasProjects = projectCount > 0;
+
     const isGood = cfg.inverseTarget
         ? value <= cfg.target
         : value >= cfg.target;
@@ -1684,6 +1693,14 @@ series.values.forEach((value, i) => {
 ctx.shadowBlur = 0;
 
 if (isGood) {
+if (!hasProjects) {
+
+    // Fara proiecte = punct neutru, fara puls
+    ctx.strokeStyle = "rgba(152,162,179,.65)";
+    ctx.lineWidth = 1.5;
+    ctx.shadowBlur = 0;
+
+} else if (isGood) {
 
     // Punct OK - contur discret
     ctx.strokeStyle = "rgba(255,255,255,.85)";
@@ -1691,7 +1708,7 @@ if (isGood) {
 
 } else {
 
-    // Puls continuu 0 → 1 → 0
+    // Exista proiecte si KPI este sub target = puls rosu
     const pulse =
         0.5 + 0.5 * Math.sin(performance.now() / 300);
 
@@ -1939,6 +1956,7 @@ function drawDashboardCharts(data, progress = 1) {
             {
                 min: 0,
                 max: 120,
+                projectCounts: totalSample,
                 tick: 20,
                 percentAxis: true,
                 target: Number(c.otd.target ?? 85),
@@ -2078,6 +2096,7 @@ function drawDashboardCharts(data, progress = 1) {
             {
                 min: 0,
                 max: 120,
+                projectCounts: totalProject,
                 tick: 20,
                 percentAxis: true,
                 target: Number(c.ote.target ?? 90),
