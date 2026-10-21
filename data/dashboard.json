@@ -1,8 +1,8 @@
 {
-  "lastUpdate": "2026-10-21 14:04",
+  "lastUpdate": "2026-10-21 14:14",
   "kpi": {
     "otd": 100.0,
-    "ote": 0.0,
+    "ote": 100.0,
     "lt": 4.1
   },
   "old": {
@@ -27,7 +27,7 @@
     },
     "ote": {
       "target": 90,
-      "total": [100.0,0.0,null,null,null,null,null,null,null,null,null,null],
+      "total": [100.0,null,null,null,null,null,null,null,null,null,null,null],
       "totalProject": [2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
       "som": [100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
       "lom": [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
