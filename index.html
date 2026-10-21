@@ -2232,6 +2232,55 @@ function replayChartAnimation() {
     chartIntroPlayed = false;
     animateDashboardChartsOnce(latestDashboardData);
 }
+ 
+/* SUNET LA DATE NOI */
+let previousLastUpdate = null;
+let soundContext = null;
+ 
+function playUpdateSound() {
+    try {
+        const AudioCtx = window.AudioContext ||
+                         window.webkitAudioContext;
+ 
+        if (!AudioCtx) return;
+ 
+        if (!soundContext) {
+            soundContext = new AudioCtx();
+        }
+ 
+        if (soundContext.state === "suspended") {
+            soundContext.resume();
+        }
+ 
+        const oscillator = soundContext.createOscillator();
+        const gain = soundContext.createGain();
+ 
+        oscillator.type = "sine";
+        oscillator.frequency.value = 880;
+ 
+        gain.gain.setValueAtTime(
+            0.0001, soundContext.currentTime
+        );
+ 
+        gain.gain.exponentialRampToValueAtTime(
+            0.12, soundContext.currentTime + 0.025
+        );
+ 
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001, soundContext.currentTime + 0.22
+        );
+ 
+        oscillator.connect(gain);
+        gain.connect(soundContext.destination);
+ 
+        oscillator.start();
+        oscillator.stop(soundContext.currentTime + 0.23);
+ 
+    } catch (error) {
+        console.warn("Sunet indisponibil:", error);
+    }
+}
+     
 async function loadDashboardKPI() {
     try {
         const response = await fetch("data/dashboard.json?t=" + Date.now(), {
@@ -2505,6 +2554,21 @@ async function updateWeather() {
 
         const response = await fetch(url);
         const data = await response.json();
+         
+        const currentLastUpdate = String(data.lastUpdate ?? "");
+ 
+        if (
+            currentLastUpdate &&
+            previousLastUpdate !== null &&
+            currentLastUpdate !== previousLastUpdate
+            ) {
+        playUpdateSound();
+}
+ 
+if (currentLastUpdate) {
+    previousLastUpdate = currentLastUpdate;
+}
+ 
 
         const temperature = Math.round(data.current.temperature_2m);
         const weatherCode = data.current.weather_code;
