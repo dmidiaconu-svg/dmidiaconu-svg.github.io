@@ -2234,10 +2234,11 @@ function replayChartAnimation() {
 }
  
 /* SUNET LA DATE NOI */
+ 
 let previousLastUpdate = null;
 let soundContext = null;
  
-function playUpdateSound() {
+async function playUpdateSound() {
     try {
         const AudioCtx = window.AudioContext ||
                          window.webkitAudioContext;
@@ -2249,7 +2250,7 @@ function playUpdateSound() {
         }
  
         if (soundContext.state === "suspended") {
-            soundContext.resume();
+            await soundContext.resume();
         }
  
         const oscillator = soundContext.createOscillator();
@@ -2258,23 +2259,17 @@ function playUpdateSound() {
         oscillator.type = "sine";
         oscillator.frequency.value = 880;
  
-        gain.gain.setValueAtTime(
-            0.0001, soundContext.currentTime
-        );
+        const now = soundContext.currentTime;
  
-        gain.gain.exponentialRampToValueAtTime(
-            0.12, soundContext.currentTime + 0.025
-        );
- 
-        gain.gain.exponentialRampToValueAtTime(
-            0.0001, soundContext.currentTime + 0.22
-        );
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.12, now + 0.025);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
  
         oscillator.connect(gain);
         gain.connect(soundContext.destination);
  
-        oscillator.start();
-        oscillator.stop(soundContext.currentTime + 0.23);
+        oscillator.start(now);
+        oscillator.stop(now + 0.26);
  
     } catch (error) {
         console.warn("Sunet indisponibil:", error);
@@ -2292,8 +2287,25 @@ async function loadDashboardKPI() {
         }
 
         const data = await response.json();
-
-        latestDashboardData = data;
+ 
+/* VERIFICARE DATE NOI DIN JSON */
+ 
+const currentLastUpdate = String(data.lastUpdate ?? "");
+ 
+if (currentLastUpdate) {
+ 
+    if (
+        previousLastUpdate !== null &&
+        currentLastUpdate !== previousLastUpdate
+    ) {
+        playUpdateSound();
+        console.log("DATE NOI DETECTATE:", currentLastUpdate);
+    }
+ 
+    previousLastUpdate = currentLastUpdate;
+}
+ 
+latestDashboardData = data;
 
         const startScreenHidden =
             document.getElementById("startScreen").style.display === "none";
@@ -2555,21 +2567,6 @@ async function updateWeather() {
         const response = await fetch(url);
         const data = await response.json();
          
-        const currentLastUpdate = String(data.lastUpdate ?? "");
- 
-        if (
-            currentLastUpdate &&
-            previousLastUpdate !== null &&
-            currentLastUpdate !== previousLastUpdate
-            ) {
-        playUpdateSound();
-}
- 
-if (currentLastUpdate) {
-    previousLastUpdate = currentLastUpdate;
-}
- 
-
         const temperature = Math.round(data.current.temperature_2m);
         const weatherCode = data.current.weather_code;
         const isDay = data.current.is_day;
@@ -2630,7 +2627,16 @@ document.getElementById("startScreen").addEventListener("click", function() {
     }
 
     this.style.display = "none";
-
+    const AudioCtx = window.AudioContext ||
+                 window.webkitAudioContext;
+ 
+if (AudioCtx) {
+    if (!soundContext) {
+        soundContext = new AudioCtx();
+    }
+ 
+    soundContext.resume();
+}
     if (latestDashboardData) {
         animateDashboardChartsOnce(latestDashboardData);
     }
