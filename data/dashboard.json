@@ -8,7 +8,7 @@
   "old": {
     "otd": 81.3,
     "ote": 100.0,
-    "lt": 10.0
+    "lt": 11.3
   },
   "charts": {
     "otd": {
@@ -27,7 +27,7 @@
     },
     "ote": {
       "target": 90,
-      "total": [100.0,null,null,null,null,null,null,null,null,null,null,null],
+      "total": [100.0,100.0,null,null,null,null,null,null,null,null,null,null],
       "totalProject": [6.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
       "som": [100.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
       "lom": [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
