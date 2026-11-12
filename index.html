@@ -2240,41 +2240,58 @@ let soundContext = null;
  
 async function playUpdateSound() {
     try {
-        const AudioCtx = window.AudioContext ||
-                         window.webkitAudioContext;
- 
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (!AudioCtx) return;
- 
+
         if (!soundContext) {
             soundContext = new AudioCtx();
         }
- 
+
         if (soundContext.state === "suspended") {
             await soundContext.resume();
         }
- 
-        const oscillator = soundContext.createOscillator();
-        const gain = soundContext.createGain();
- 
-        oscillator.type = "sine";
-        oscillator.frequency.value = 880;
- 
+
+        // 1. Scadem temporar volumul radioului la 15% ca sa se auda notificarea
+        const radioAudio = document.getElementById("audio");
+        const originalVolume = radioAudio ? radioAudio.volume : 1;
+        if (radioAudio && !radioAudio.paused) {
+            radioAudio.volume = 0.15;
+        }
+
         const now = soundContext.currentTime;
- 
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.exponentialRampToValueAtTime(0.12, now + 0.025);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
- 
-        oscillator.connect(gain);
-        gain.connect(soundContext.destination);
- 
-        oscillator.start(now);
-        oscillator.stop(now + 0.26);
- 
+
+        // 2. Redam doua tonuri clare (ex. 880 Hz urmat de 1174 Hz) la volum mai mare (0.5)
+        [880, 1174.66].forEach((freq, index) => {
+            const osc = soundContext.createOscillator();
+            const gain = soundContext.createGain();
+
+            osc.type = "triangle"; // Se aude mai clar pe boxe de TV decat "sine"
+            osc.frequency.value = freq;
+
+            const startTime = now + index * 0.18;
+            gain.gain.setValueAtTime(0.001, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.5, startTime + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+
+            osc.connect(gain);
+            gain.connect(soundContext.destination);
+
+            osc.start(startTime);
+            osc.stop(startTime + 0.36);
+        });
+
+        // 3. Revenim la volumul normal al radioului dupa 1 secunda
+        setTimeout(() => {
+            if (radioAudio) {
+                radioAudio.volume = originalVolume;
+            }
+        }, 1000);
+
     } catch (error) {
         console.warn("Sunet indisponibil:", error);
     }
 }
+
      
 async function loadDashboardKPI() {
     try {
