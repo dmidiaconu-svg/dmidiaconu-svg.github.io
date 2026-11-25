@@ -1335,11 +1335,15 @@ function updateTrend(id, currentValue, oldValue, inverse = false, suffix = "") {
         suffix;
 }
 function getRefreshTime(lastUpdate) {
-    if (!lastUpdate) return "--:--";
+    if (!lastUpdate) return "--.--.---- --:--";
 
-    // Accepts e.g. "2026-09-10 13:35" or "10.09.2026 13:35"
-    const match = String(lastUpdate).match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
-    return match ? match[0] : String(lastUpdate);
+    const raw = String(lastUpdate).trim();
+
+    // 1. Daca formatul din JSON este YYYY-MM-DD HH:MM (ex: "2026-09-10 13:35")
+    const isoMatch = raw.match(/(\d{4})-(\d{2})-(\d{2})\s+([01]?\d|2[0-3]):([0-5]\d)/);
+    if (isoMatch) {
+        return `${isoMatch[3]}.${isoMatch[2]}.${isoMatch[1]} ${isoMatch[4]}:${isoMatch[5]}`;
+    }
 }
 
 
